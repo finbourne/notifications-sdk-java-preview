@@ -1,0 +1,20 @@
+
+
+# CreateWebhookNotification
+
+The information required to create a notification which, when processed, will trigger a webhook
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**description** | **String** | The summary of the services provided by the notification | 
+**httpMethod** | **String** | The HTTP method such as GET, POST, etc. to use on the request | 
+**url** | **String** | The URL to send the request to | 
+**authenticationType** | **String** | The type of authentication to use on the request | 
+**authenticationConfigurationItemPaths** | **Map&lt;String, String&gt;** | The paths of the Configuration Store configuration items that contain the authentication configuration. Each  authentication type requires different keys:  - Lusid - None required  - BasicAuth - Requires &#39;Username&#39; and &#39;Password&#39;  - BearerToken - Requires &#39;BearerToken&#39;                e.g. the following would be valid assuming that the config is present in the configuration store at the  specified paths:                    \&quot;authenticationType\&quot;: \&quot;BasicAuth\&quot;,      \&quot;authenticationConfigurationItemPaths\&quot;: {          \&quot;Username\&quot;: \&quot;config://personal/myUserId/WebhookConfigurations/ExampleService/AdminUser\&quot;,          \&quot;Password\&quot;: \&quot;config://personal/myUserId/WebhookConfigurations/ExampleService/AdminPassword\&quot;      } |  [optional]
+**contentType** | **String** | The type of the content e.g. Json |  [optional]
+**content** | **Object** | The content of the request |  [optional]
+
+
+

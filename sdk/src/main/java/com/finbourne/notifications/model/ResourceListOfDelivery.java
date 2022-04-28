@@ -15,8 +15,8 @@ package com.finbourne.notifications.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.finbourne.notifications.model.Delivery;
 import com.finbourne.notifications.model.Link;
-import com.finbourne.notifications.model.Subscription;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -30,13 +30,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ResourceListOfSubscription
+ * ResourceListOfDelivery
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class ResourceListOfSubscription {
+public class ResourceListOfDelivery {
   public static final String SERIALIZED_NAME_VALUES = "values";
   @SerializedName(SERIALIZED_NAME_VALUES)
-  private List<Subscription> values = new ArrayList<>();
+  private List<Delivery> values = new ArrayList<>();
 
   public static final String SERIALIZED_NAME_HREF = "href";
   @SerializedName(SERIALIZED_NAME_HREF)
@@ -55,12 +55,12 @@ public class ResourceListOfSubscription {
   private String previousPage;
 
 
-  public ResourceListOfSubscription values(List<Subscription> values) {
+  public ResourceListOfDelivery values(List<Delivery> values) {
     this.values = values; 
     return this;
   }
 
-  public ResourceListOfSubscription addValuesItem(Subscription valuesItem) {
+  public ResourceListOfDelivery addValuesItem(Delivery valuesItem) {
    
     this.values.add(valuesItem);
     return this;
@@ -71,16 +71,16 @@ public class ResourceListOfSubscription {
    * @return values
   **/
   @ApiModelProperty(required = true, value = "")
-  public List<Subscription> getValues() {
+  public List<Delivery> getValues() {
     return values;
   }
 
-  public void setValues(List<Subscription> values) {
+  public void setValues(List<Delivery> values) {
     this.values = values;
   }
 
 
-  public ResourceListOfSubscription href(URI href) {
+  public ResourceListOfDelivery href(URI href) {
     this.href = href; 
     return this;
   }
@@ -99,12 +99,12 @@ public class ResourceListOfSubscription {
   }
 
 
-  public ResourceListOfSubscription links(List<Link> links) {
+  public ResourceListOfDelivery links(List<Link> links) {
     this.links = links; 
     return this;
   }
 
-  public ResourceListOfSubscription addLinksItem(Link linksItem) {
+  public ResourceListOfDelivery addLinksItem(Link linksItem) {
    
     if (this.links == null) {
       this.links = new ArrayList<>();
@@ -127,7 +127,7 @@ public class ResourceListOfSubscription {
   }
 
 
-  public ResourceListOfSubscription nextPage(String nextPage) {
+  public ResourceListOfDelivery nextPage(String nextPage) {
     this.nextPage = nextPage; 
     return this;
   }
@@ -146,7 +146,7 @@ public class ResourceListOfSubscription {
   }
 
 
-  public ResourceListOfSubscription previousPage(String previousPage) {
+  public ResourceListOfDelivery previousPage(String previousPage) {
     this.previousPage = previousPage; 
     return this;
   }
@@ -184,7 +184,7 @@ public class ResourceListOfSubscription {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ResourceListOfSubscription {\n");
+    sb.append("class ResourceListOfDelivery {\n");
     sb.append("    values: ").append(toIndentedString(values)).append("\n");
     sb.append("    href: ").append(toIndentedString(href)).append("\n");
     sb.append("    links: ").append(toIndentedString(links)).append("\n");

@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Notifications API
-  version: 0.1.296
+  version: 0.1.315
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -17,17 +17,100 @@ security:
 tags:
 - description: Metadata about the application
   name: Application Metadata
+- description: Methods for managing attempted message deliveries.
+  name: Deliveries
 - description: Methods for discovering possible event types.
   name: EventTypes
 - description: Methods for triggering events.
   name: Events
-- description: Methods for managing delivery messages
-  name: Messages
 - description: Methods for managing a subscription's notifications.
   name: Notifications
 - description: Methods for managing subscriptions
   name: Subscriptions
 paths:
+  /api/deliveries:
+    get:
+      description: Currently only returns deliveries with failed attempts.
+      operationId: ListDeliveries
+      parameters:
+      - description: The pagination token to use to continue listing delivery attempts.
+          This value is returned from the previous call. When this field is supplied
+          the filter field should not be supplied.
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          description: The pagination token to use to continue listing delivery attempts.
+            This value is returned from the previous call. When this field is supplied
+            the filter field should not be supplied.
+          maxLength: 500
+          minLength: 1
+          nullable: true
+          pattern: ^[a-zA-Z0-9\+/]*={0,3}$
+          type: string
+        style: form
+      - description: The maximum number of delivery attempts to retrieve. Defaults
+          to 5000 if not specified.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          description: The maximum number of delivery attempts to retrieve. Defaults
+            to 5000 if not specified.
+          format: int32
+          nullable: true
+          type: integer
+        style: form
+        x-nullable: true
+      - description: Expression to filter the result set. Read more about <see href="https://support.lusid.com/filtering-results-from-lusid"
+          /> filtering results from LUSID.
+        explode: true
+        in: query
+        name: filter
+        required: false
+        schema:
+          description: Expression to filter the result set. Read more about <see href="https://support.lusid.com/filtering-results-from-lusid"
+            /> filtering results from LUSID.
+          maxLength: 16384
+          minLength: 0
+          nullable: true
+          pattern: ^[\s\S]*$
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceListOfDelivery'
+          description: Success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: No deliveries exists with the provided filter(s)
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: '[EXPERIMENTAL] ListDeliveries: List Deliveries'
+      tags:
+      - Deliveries
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
   /api/events:
     post:
       operationId: CreateEvent
@@ -231,15 +314,15 @@ paths:
           pattern: ^[\s\S]*$
           type: string
         style: form
-      - description: Fields to order the result set. Read more about <see href="https://support.lusid.com/filtering-results-from-lusid">
-          filtering results from LUSID</see>.
+      - description: Fields to order the result set. Read more about <see href="https://support.lusid.com/filtering-results-from-lusid"
+          /> filtering results from LUSID.
         explode: true
         in: query
         name: sortBy
         required: false
         schema:
-          description: Fields to order the result set. Read more about <see href="https://support.lusid.com/filtering-results-from-lusid">
-            filtering results from LUSID</see>.
+          description: Fields to order the result set. Read more about <see href="https://support.lusid.com/filtering-results-from-lusid"
+            /> filtering results from LUSID.
           maxLength: 16384
           minLength: 1
           nullable: true
@@ -401,74 +484,6 @@ paths:
       - Subscriptions
       x-fbn-apistatus: Experimental
       x-contentType: application/json-patch+json
-      x-accepts: application/json
-  /api/subscriptions/deliveries:
-    get:
-      operationId: ListUndeliveredMessages
-      parameters:
-      - explode: true
-        in: query
-        name: page
-        required: false
-        schema:
-          maxLength: 500
-          minLength: 1
-          nullable: true
-          pattern: ^[a-zA-Z0-9\+/]*={0,3}$
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          format: int32
-          nullable: true
-          type: integer
-        style: form
-        x-nullable: true
-      - explode: true
-        in: query
-        name: filter
-        required: false
-        schema:
-          maxLength: 16384
-          minLength: 0
-          nullable: true
-          pattern: ^[\s\S]*$
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResourceListOfUndeliveredMessage'
-          description: Success
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LusidValidationProblemDetails'
-          description: The details of the input related failure
-        "404":
-          content:
-            application/json:
-              schema:
-                type: string
-          description: No undelivered messages exists with the provided filter(s)
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LusidProblemDetails'
-          description: Error response
-      security:
-      - oauth2: []
-      summary: '[EXPERIMENTAL] ListUndeliveredMessages: List undelivered messages'
-      tags:
-      - Messages
-      x-fbn-apistatus: Experimental
       x-accepts: application/json
   /api/subscriptions/{scope}/{code}:
     delete:
@@ -1953,18 +1968,47 @@ components:
       - entity
       - scope
       type: object
+    Attempt:
+      additionalProperties: false
+      description: Details of an attempt of delivery.
+      example:
+        attemptNumber: 0
+        attemptTime: 2000-01-23T04:56:07.000+00:00
+        status:
+          result: result
+          detailedMessage: detailedMessage
+      properties:
+        attemptNumber:
+          description: The attempt number of the delivery.
+          format: int32
+          type: integer
+        attemptTime:
+          description: The time that the delivery was attempted.
+          format: date-time
+          type: string
+        status:
+          $ref: '#/components/schemas/AttemptStatus'
+      required:
+      - attemptNumber
+      - attemptTime
+      - status
+      type: object
     AttemptStatus:
       additionalProperties: false
+      description: Status of the delivery attempt.
       example:
         result: result
-        failureMessage: failureMessage
+        detailedMessage: detailedMessage
       properties:
         result:
+          description: Result of the delivery.
+          type: string
+        detailedMessage:
+          description: The detailed message from attempting to deliver the message.
           nullable: true
           type: string
-        failureMessage:
-          nullable: true
-          type: string
+      required:
+      - result
       type: object
     CreateEmailNotification:
       additionalProperties: false
@@ -2178,27 +2222,61 @@ components:
       - httpMethod
       - url
       type: object
-    DeliveryAttempt:
+    Delivery:
       additionalProperties: false
       example:
-        attemptNumber: 0
-        attemptedTime: 2000-01-23T04:56:07.000+00:00
-        attemptStatus:
-          result: result
-          failureMessage: failureMessage
+        eventId: eventId
+        messageDetails: messageDetails
+        deliveryChannel: deliveryChannel
+        notificationId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        subscriptionId:
+          code: code
+          scope: scope
+        attempts:
+        - attemptNumber: 0
+          attemptTime: 2000-01-23T04:56:07.000+00:00
+          status:
+            result: result
+            detailedMessage: detailedMessage
+        - attemptNumber: 0
+          attemptTime: 2000-01-23T04:56:07.000+00:00
+          status:
+            result: result
+            detailedMessage: detailedMessage
       properties:
-        attemptNumber:
-          format: int32
-          type: integer
-        attemptedTime:
-          format: date-time
+        id:
+          description: The identifier of the delivery.
+          format: uuid
           type: string
-        attemptStatus:
-          $ref: '#/components/schemas/AttemptStatus'
+        eventId:
+          description: The identifier of the associated event.
+          type: string
+        subscriptionId:
+          $ref: '#/components/schemas/ResourceId'
+        notificationId:
+          description: The identifier of the associated notification.
+          format: uuid
+          type: string
+        deliveryChannel:
+          description: The delivery channel of the message.
+          type: string
+        messageDetails:
+          description: The Details of the delivery message as JSON string.
+          type: string
+        attempts:
+          description: A list of all the delivery attempts made for this message.
+          items:
+            $ref: '#/components/schemas/Attempt'
+          type: array
       required:
-      - attemptNumber
-      - attemptStatus
-      - attemptedTime
+      - attempts
+      - deliveryChannel
+      - eventId
+      - id
+      - messageDetails
+      - notificationId
+      - subscriptionId
       type: object
     EventTypeSchema:
       additionalProperties: false
@@ -2827,6 +2905,83 @@ components:
       required:
       - values
       type: object
+    ResourceListOfDelivery:
+      additionalProperties: false
+      example:
+        previousPage: previousPage
+        nextPage: nextPage
+        values:
+        - eventId: eventId
+          messageDetails: messageDetails
+          deliveryChannel: deliveryChannel
+          notificationId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          subscriptionId:
+            code: code
+            scope: scope
+          attempts:
+          - attemptNumber: 0
+            attemptTime: 2000-01-23T04:56:07.000+00:00
+            status:
+              result: result
+              detailedMessage: detailedMessage
+          - attemptNumber: 0
+            attemptTime: 2000-01-23T04:56:07.000+00:00
+            status:
+              result: result
+              detailedMessage: detailedMessage
+        - eventId: eventId
+          messageDetails: messageDetails
+          deliveryChannel: deliveryChannel
+          notificationId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          subscriptionId:
+            code: code
+            scope: scope
+          attempts:
+          - attemptNumber: 0
+            attemptTime: 2000-01-23T04:56:07.000+00:00
+            status:
+              result: result
+              detailedMessage: detailedMessage
+          - attemptNumber: 0
+            attemptTime: 2000-01-23T04:56:07.000+00:00
+            status:
+              result: result
+              detailedMessage: detailedMessage
+        links:
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        - method: method
+          description: description
+          href: https://openapi-generator.tech
+          relation: relation
+        href: https://openapi-generator.tech
+      properties:
+        values:
+          items:
+            $ref: '#/components/schemas/Delivery'
+          type: array
+        href:
+          format: uri
+          nullable: true
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          nullable: true
+          type: array
+        nextPage:
+          nullable: true
+          type: string
+        previousPage:
+          nullable: true
+          type: string
+      required:
+      - values
+      type: object
     ResourceListOfEventTypeSchema:
       additionalProperties: false
       example:
@@ -3008,83 +3163,6 @@ components:
       required:
       - values
       type: object
-    ResourceListOfUndeliveredMessage:
-      additionalProperties: false
-      example:
-        previousPage: previousPage
-        nextPage: nextPage
-        values:
-        - eventId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          deliveryId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          messageDetails: messageDetails
-          deliveryChannel: deliveryChannel
-          notificationId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          subscriptionIdentifier:
-            code: code
-            scope: scope
-          deliveryAttempts:
-          - attemptNumber: 0
-            attemptedTime: 2000-01-23T04:56:07.000+00:00
-            attemptStatus:
-              result: result
-              failureMessage: failureMessage
-          - attemptNumber: 0
-            attemptedTime: 2000-01-23T04:56:07.000+00:00
-            attemptStatus:
-              result: result
-              failureMessage: failureMessage
-        - eventId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          deliveryId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          messageDetails: messageDetails
-          deliveryChannel: deliveryChannel
-          notificationId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          subscriptionIdentifier:
-            code: code
-            scope: scope
-          deliveryAttempts:
-          - attemptNumber: 0
-            attemptedTime: 2000-01-23T04:56:07.000+00:00
-            attemptStatus:
-              result: result
-              failureMessage: failureMessage
-          - attemptNumber: 0
-            attemptedTime: 2000-01-23T04:56:07.000+00:00
-            attemptStatus:
-              result: result
-              failureMessage: failureMessage
-        links:
-        - method: method
-          description: description
-          href: https://openapi-generator.tech
-          relation: relation
-        - method: method
-          description: description
-          href: https://openapi-generator.tech
-          relation: relation
-        href: https://openapi-generator.tech
-      properties:
-        values:
-          items:
-            $ref: '#/components/schemas/UndeliveredMessage'
-          type: array
-        href:
-          format: uri
-          nullable: true
-          type: string
-        links:
-          items:
-            $ref: '#/components/schemas/Link'
-          nullable: true
-          type: array
-        nextPage:
-          nullable: true
-          type: string
-        previousPage:
-          nullable: true
-          type: string
-      required:
-      - values
-      type: object
     Subscription:
       additionalProperties: false
       description: A subscription object
@@ -3231,57 +3309,6 @@ components:
       - lastModifiedBy
       - matchingPattern
       - status
-      type: object
-    UndeliveredMessage:
-      additionalProperties: false
-      example:
-        eventId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        deliveryId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        messageDetails: messageDetails
-        deliveryChannel: deliveryChannel
-        notificationId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        subscriptionIdentifier:
-          code: code
-          scope: scope
-        deliveryAttempts:
-        - attemptNumber: 0
-          attemptedTime: 2000-01-23T04:56:07.000+00:00
-          attemptStatus:
-            result: result
-            failureMessage: failureMessage
-        - attemptNumber: 0
-          attemptedTime: 2000-01-23T04:56:07.000+00:00
-          attemptStatus:
-            result: result
-            failureMessage: failureMessage
-      properties:
-        deliveryId:
-          format: uuid
-          type: string
-        eventId:
-          format: uuid
-          type: string
-        subscriptionIdentifier:
-          $ref: '#/components/schemas/ResourceId'
-        notificationId:
-          format: uuid
-          type: string
-        deliveryChannel:
-          type: string
-        messageDetails:
-          type: string
-        deliveryAttempts:
-          items:
-            $ref: '#/components/schemas/DeliveryAttempt'
-          type: array
-      required:
-      - deliveryAttempts
-      - deliveryChannel
-      - deliveryId
-      - eventId
-      - messageDetails
-      - notificationId
-      - subscriptionIdentifier
       type: object
     UpdateEmailNotification:
       additionalProperties: false
@@ -3498,9 +3525,9 @@ x-tagGroups:
   name: API
   tags:
   - Application Metadata
+  - Deliveries
   - EventTypes
   - Events
-  - Messages
   - Notifications
   - Subscriptions
 

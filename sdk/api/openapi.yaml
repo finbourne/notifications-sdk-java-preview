@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Notifications API
-  version: 0.1.316
+  version: 0.1.317
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -64,15 +64,15 @@ paths:
           type: integer
         style: form
         x-nullable: true
-      - description: Expression to filter the result set. Read more about <see href="https://support.lusid.com/filtering-results-from-lusid"
-          /> filtering results from LUSID.
+      - description: Expression to filter the result set. For more information about
+          filtering results, see https://support.lusid.com/knowledgebase/article/KA-01914.
         explode: true
         in: query
         name: filter
         required: false
         schema:
-          description: Expression to filter the result set. Read more about <see href="https://support.lusid.com/filtering-results-from-lusid"
-            /> filtering results from LUSID.
+          description: Expression to filter the result set. For more information about
+            filtering results, see https://support.lusid.com/knowledgebase/article/KA-01914.
           maxLength: 16384
           minLength: 0
           nullable: true
@@ -83,6 +83,41 @@ paths:
         "200":
           content:
             application/json:
+              example:
+                values:
+                - id: d03e83b5-e7cb-4f23-a0a5-298b4cd46e5e
+                  eventId: PortfolioCreated
+                  subscriptionId:
+                    scope: Scope
+                    code: Code
+                  notificationId: 5131adef-474f-436c-af23-483b4307e734
+                  deliveryChannel: Email
+                  messageDetails: '{"BccAddresses":["AlanShearer@email.com"], "CcAddresses":["MortenPederson@email.com"],
+                    "ToAddresses":["KennyDalglish@email.com"], "Subject":"Portfolio
+                    Created!", "PlainTextBody":"Portfolio has been created.", "HtmlBody":"<p>Body</p>"}'
+                  attempts:
+                  - attemptNumber: 1
+                    attemptTime: 2022-05-03T10:47:31.8172231+00:00
+                    status:
+                      result: Failed
+                      detailedMessage: Email server not responding.
+                - id: e8f321a0-fb0d-4b18-abc7-ee894e3cd947
+                  eventId: ReconciliationComplete
+                  subscriptionId:
+                    scope: Scope
+                    code: Code
+                  notificationId: 360fe17a-1306-48b8-adfa-2c4a1c662d30
+                  deliveryChannel: SMS
+                  messageDetails: '{"Recipient":"+447000000000","TextBody":"Your reconciliation
+                    request has completed."}'
+                  attempts:
+                  - attemptNumber: 1
+                    attemptTime: 2022-05-03T10:47:31.8172428+00:00
+                    status:
+                      result: Failed
+                      detailedMessage: SMS limit reached.
+                href: http://example.com
+                links: []
               schema:
                 $ref: '#/components/schemas/ResourceListOfDelivery'
           description: Success

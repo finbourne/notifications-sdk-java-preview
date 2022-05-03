@@ -37,7 +37,7 @@ public class Example {
     DeliveriesApi apiInstance = new DeliveriesApi(defaultClient);
     String page = "page_example"; // String | The pagination token to use to continue listing delivery attempts. This value is returned from the previous call. When this field is supplied the filter field should not be supplied.
     Integer limit = 56; // Integer | The maximum number of delivery attempts to retrieve. Defaults to 5000 if not specified.
-    String filter = "filter_example"; // String | Expression to filter the result set. Read more about <see href=\"https://support.lusid.com/filtering-results-from-lusid\" /> filtering results from LUSID.
+    String filter = "filter_example"; // String | Expression to filter the result set. For more information about filtering results, see https://support.lusid.com/knowledgebase/article/KA-01914.
     try {
       ResourceListOfDelivery result = apiInstance.listDeliveries(page, limit, filter);
       System.out.println(result);
@@ -58,7 +58,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **page** | **String**| The pagination token to use to continue listing delivery attempts. This value is returned from the previous call. When this field is supplied the filter field should not be supplied. | [optional]
  **limit** | **Integer**| The maximum number of delivery attempts to retrieve. Defaults to 5000 if not specified. | [optional]
- **filter** | **String**| Expression to filter the result set. Read more about &lt;see href&#x3D;\&quot;https://support.lusid.com/filtering-results-from-lusid\&quot; /&gt; filtering results from LUSID. | [optional]
+ **filter** | **String**| Expression to filter the result set. For more information about filtering results, see https://support.lusid.com/knowledgebase/article/KA-01914. | [optional]
 
 ### Return type
 

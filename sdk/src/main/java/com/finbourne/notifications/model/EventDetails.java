@@ -23,57 +23,34 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.UUID;
 
 /**
- * Status of the delivery attempt.
+ * EventDetails
  */
-@ApiModel(description = "Status of the delivery attempt.")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class AttemptStatus {
-  public static final String SERIALIZED_NAME_RESULT = "result";
-  @SerializedName(SERIALIZED_NAME_RESULT)
-  private String result;
-
-  public static final String SERIALIZED_NAME_DETAILED_MESSAGE = "detailedMessage";
-  @SerializedName(SERIALIZED_NAME_DETAILED_MESSAGE)
-  private String detailedMessage;
+public class EventDetails {
+  public static final String SERIALIZED_NAME_ID = "id";
+  @SerializedName(SERIALIZED_NAME_ID)
+  private UUID id;
 
 
-  public AttemptStatus result(String result) {
-    this.result = result; 
+  public EventDetails id(UUID id) {
+    this.id = id; 
     return this;
   }
 
    /**
-   * Result of the delivery.
-   * @return result
+   * The identifier of the event.
+   * @return id
   **/
-  @ApiModelProperty(required = true, value = "Result of the delivery.")
-  public String getResult() {
-    return result;
+  @ApiModelProperty(required = true, value = "The identifier of the event.")
+  public UUID getId() {
+    return id;
   }
 
-  public void setResult(String result) {
-    this.result = result;
-  }
-
-
-  public AttemptStatus detailedMessage(String detailedMessage) {
-    this.detailedMessage = detailedMessage; 
-    return this;
-  }
-
-   /**
-   * The detailed message from attempting to deliver the message.
-   * @return detailedMessage
-  **/
-  @ApiModelProperty(value = "The detailed message from attempting to deliver the message.")
-  public String getDetailedMessage() {
-    return detailedMessage;
-  }
-
-  public void setDetailedMessage(String detailedMessage) {
-    this.detailedMessage = detailedMessage;
+  public void setId(UUID id) {
+    this.id = id;
   }
 
 
@@ -96,9 +73,8 @@ public class AttemptStatus {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AttemptStatus {\n");
-    sb.append("    result: ").append(toIndentedString(result)).append("\n");
-    sb.append("    detailedMessage: ").append(toIndentedString(detailedMessage)).append("\n");
+    sb.append("class EventDetails {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("}");
     return sb.toString();
   }

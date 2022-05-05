@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 <a name="createEvent"></a>
 # **createEvent**
-> Object createEvent(body)
+> EventDetails createEvent(body)
 
 [EXPERIMENTAL] CreateEvent: Create a new event.
 
@@ -35,7 +35,7 @@ public class Example {
     EventsApi apiInstance = new EventsApi(defaultClient);
     Object body = {"eventType":"Manual","id":"acb5722d-341a-4802-b9fd-cf740a6a7797","message":"TestMessage","subject":"TestSubject","eventTime":"2021-08-27T17:39:02.9427036+01:00"}; // Object | The data to create an event.
     try {
-      Object result = apiInstance.createEvent(body);
+      EventDetails result = apiInstance.createEvent(body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling EventsApi#createEvent");
@@ -56,7 +56,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**EventDetails**](EventDetails.md)
 
 ### Authorization
 

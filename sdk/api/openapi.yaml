@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Notifications API
-  version: 0.1.327
+  version: 0.1.329
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -85,34 +85,34 @@ paths:
             application/json:
               example:
                 values:
-                - id: 7a9c8bc7-6ca3-48b2-89b2-9f345481e8bc
+                - id: 931a0c7b-0963-4ca5-9963-9f747a34ef17
                   eventId: PortfolioCreated
                   subscriptionId:
                     scope: Scope
                     code: Code
-                  notificationId: 7164b1ce-8ad0-4a21-9c6b-df82fb02c73d
+                  notificationId: b65b4db5-3f3f-4fc2-b4c9-a53686ab6fa9
                   deliveryChannel: Email
                   messageDetails: '{"BccAddresses":["AlanShearer@email.com"], "CcAddresses":["MortenPederson@email.com"],
                     "ToAddresses":["KennyDalglish@email.com"], "Subject":"Portfolio
                     Created!", "PlainTextBody":"Portfolio has been created.", "HtmlBody":"<p>Body</p>"}'
                   attempts:
                   - attemptNumber: 1
-                    attemptTime: 2022-05-05T14:30:21.3952583+00:00
+                    attemptTime: 2022-05-05T16:30:03.3582611+00:00
                     status:
                       result: Failed
                       detailedMessage: Email server not responding.
-                - id: 86fdfb2c-bfbb-490c-b4be-b741e2a4bee3
+                - id: 73dd781b-3071-4538-b1b9-9205b53cd9f6
                   eventId: ReconciliationComplete
                   subscriptionId:
                     scope: Scope
                     code: Code
-                  notificationId: 64538384-5127-45b0-bea1-383ab386c512
+                  notificationId: a4af0fdb-f336-48b1-8ed1-4d5ae53464c1
                   deliveryChannel: SMS
                   messageDetails: '{"Recipient":"+447000000000","TextBody":"Your reconciliation
                     request has completed."}'
                   attempts:
                   - attemptNumber: 1
-                    attemptTime: 2022-05-05T14:30:21.3952647+00:00
+                    attemptTime: 2022-05-05T16:30:03.3596714+00:00
                     status:
                       result: Failed
                       detailedMessage: SMS limit reached.
@@ -202,7 +202,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NoContent'
+                $ref: '#/components/schemas/EventDetails'
           description: Success
         "400":
           content:
@@ -2313,6 +2313,18 @@ components:
       - notificationId
       - subscriptionId
       type: object
+    EventDetails:
+      additionalProperties: false
+      example:
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        id:
+          description: The identifier of the event.
+          format: uuid
+          type: string
+      required:
+      - id
+      type: object
     EventTypeSchema:
       additionalProperties: false
       description: An EventType object
@@ -2560,9 +2572,6 @@ components:
           type: string
       required:
       - eventType
-      type: object
-    NoContent:
-      additionalProperties: false
       type: object
     Notification:
       additionalProperties: false

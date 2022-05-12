@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Notifications API
-  version: 0.1.350
+  version: 0.1.352
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -85,34 +85,34 @@ paths:
             application/json:
               example:
                 values:
-                - id: 923bb492-2080-49a4-91da-55bf02800e05
+                - id: 25d85049-8d59-4321-8660-9d2d226c884e
                   eventId: PortfolioCreated
                   subscriptionId:
                     scope: Scope
                     code: Code
-                  notificationId: b8dce397-adad-406b-b62b-5b1e4a3e0982
+                  notificationId: 264549d4-ccd0-448d-b9e3-77f68d2225c9
                   deliveryChannel: Email
                   messageDetails: '{"BccAddresses":["AlanShearer@email.com"], "CcAddresses":["MortenPederson@email.com"],
                     "ToAddresses":["KennyDalglish@email.com"], "Subject":"Portfolio
                     Created!", "PlainTextBody":"Portfolio has been created.", "HtmlBody":"<p>Body</p>"}'
                   attempts:
                   - attemptNumber: 1
-                    attemptTime: 2022-05-12T12:23:40.2636994+00:00
+                    attemptTime: 2022-05-12T13:41:00.9370425+00:00
                     status:
                       result: Failed
                       detailedMessage: Email server not responding.
-                - id: bd9bc157-5a2f-434c-93de-62e32306df5f
+                - id: bbcb7704-77f4-4b53-a330-7bc163e87946
                   eventId: ReconciliationComplete
                   subscriptionId:
                     scope: Scope
                     code: Code
-                  notificationId: adaf19e8-e6df-45e6-a897-f1f324c7424b
+                  notificationId: 220a7d9d-3a19-4091-85d8-fb9314afff4a
                   deliveryChannel: SMS
                   messageDetails: '{"Recipient":"+447000000000","TextBody":"Your reconciliation
                     request has completed."}'
                   attempts:
                   - attemptNumber: 1
-                    attemptTime: 2022-05-12T12:23:40.2648267+00:00
+                    attemptTime: 2022-05-12T13:41:00.9380262+00:00
                     status:
                       result: Failed
                       detailedMessage: SMS limit reached.

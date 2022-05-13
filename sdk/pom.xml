@@ -5,7 +5,7 @@
     <artifactId>notifications-sdk-preview</artifactId>
     <packaging>jar</packaging>
     <name>notifications-sdk-preview</name>
-    <version>0.1.352-SNAPSHOT</version>
+    <version>0.1.354-SNAPSHOT</version>
     <url>https://github.com/openapitools/openapi-generator</url>
     <description>OpenAPI Java</description>
     <scm>

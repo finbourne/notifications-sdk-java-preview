@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Notifications API
-  version: 0.1.355
+  version: 0.1.356
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -85,34 +85,34 @@ paths:
             application/json:
               example:
                 values:
-                - id: 2925d9c4-0dbc-44a0-bc11-81cd0efd5806
-                  eventId: PortfolioCreated
+                - id: 0934f945-95aa-40da-a5a0-1714bc558736
+                  eventId: 0f8fad5b-d9cb-469f-a165-70867728950e
                   subscriptionId:
                     scope: Scope
                     code: Code
-                  notificationId: 7741a46d-3357-400f-8f15-07e8f6c252f0
+                  notificationId: a10b68c3-027e-4537-8d9a-81aa350ae885
                   deliveryChannel: Email
                   messageDetails: '{"BccAddresses":["AlanShearer@email.com"], "CcAddresses":["MortenPederson@email.com"],
                     "ToAddresses":["KennyDalglish@email.com"], "Subject":"Portfolio
                     Created!", "PlainTextBody":"Portfolio has been created.", "HtmlBody":"<p>Body</p>"}'
                   attempts:
                   - attemptNumber: 1
-                    attemptTime: 2022-05-16T08:31:22.3996499+00:00
+                    attemptTime: 2022-05-18T13:33:08.0237473+00:00
                     status:
                       result: Failed
                       detailedMessage: Email server not responding.
-                - id: bfbec1a8-8bfd-44fd-85ea-eca7c2222491
-                  eventId: ReconciliationComplete
+                - id: cb590cff-6bd7-4a4b-8c4c-e92554399cf0
+                  eventId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
                   subscriptionId:
                     scope: Scope
                     code: Code
-                  notificationId: cfc9bba5-22b3-4010-a8fa-95aeac83d5f7
+                  notificationId: 2760ef2e-8b12-48fc-8f20-8159cdb1f50b
                   deliveryChannel: SMS
                   messageDetails: '{"Recipient":"+447000000000","TextBody":"Your reconciliation
                     request has completed."}'
                   attempts:
                   - attemptNumber: 1
-                    attemptTime: 2022-05-16T08:31:22.4005656+00:00
+                    attemptTime: 2022-05-18T13:33:08.0249981+00:00
                     status:
                       result: Failed
                       detailedMessage: SMS limit reached.

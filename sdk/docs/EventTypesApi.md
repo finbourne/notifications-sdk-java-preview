@@ -34,7 +34,7 @@ public class Example {
     oauth2.setAccessToken("YOUR ACCESS TOKEN");
 
     EventTypesApi apiInstance = new EventTypesApi(defaultClient);
-    String eventType = "eventType_example"; // String | The event type
+    String eventType = "eventType_example"; // String | The event type to retrieve schema for.
     try {
       EventTypeSchema result = apiInstance.getEventType(eventType);
       System.out.println(result);
@@ -53,7 +53,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **eventType** | **String**| The event type |
+ **eventType** | **String**| The event type to retrieve schema for. |
 
 ### Return type
 

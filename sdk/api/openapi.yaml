@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Notifications API
-  version: 0.1.356
+  version: 0.1.425
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -85,34 +85,34 @@ paths:
             application/json:
               example:
                 values:
-                - id: 0934f945-95aa-40da-a5a0-1714bc558736
+                - id: e8e2d8d3-0a15-414f-b44a-854cd937ee18
                   eventId: 0f8fad5b-d9cb-469f-a165-70867728950e
                   subscriptionId:
                     scope: Scope
                     code: Code
-                  notificationId: a10b68c3-027e-4537-8d9a-81aa350ae885
+                  notificationId: a6c8a483-1fb1-4e80-b20d-a328dd9484ef
                   deliveryChannel: Email
                   messageDetails: '{"BccAddresses":["AlanShearer@email.com"], "CcAddresses":["MortenPederson@email.com"],
                     "ToAddresses":["KennyDalglish@email.com"], "Subject":"Portfolio
                     Created!", "PlainTextBody":"Portfolio has been created.", "HtmlBody":"<p>Body</p>"}'
                   attempts:
                   - attemptNumber: 1
-                    attemptTime: 2022-05-18T13:33:08.0237473+00:00
+                    attemptTime: 2021-08-03T12:00:00.0000000+00:00
                     status:
                       result: Failed
                       detailedMessage: Email server not responding.
-                - id: cb590cff-6bd7-4a4b-8c4c-e92554399cf0
+                - id: ba2ffdbf-1765-457b-97c5-b36b5d4d990e
                   eventId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
                   subscriptionId:
                     scope: Scope
                     code: Code
-                  notificationId: 2760ef2e-8b12-48fc-8f20-8159cdb1f50b
+                  notificationId: e3fe3114-43c4-4d06-ae2d-f792fab9b57c
                   deliveryChannel: SMS
                   messageDetails: '{"Recipient":"+447000000000","TextBody":"Your reconciliation
                     request has completed."}'
                   attempts:
                   - attemptNumber: 1
-                    attemptTime: 2022-05-18T13:33:08.0249981+00:00
+                    attemptTime: 2021-08-03T12:00:00.0000000+00:00
                     status:
                       result: Failed
                       detailedMessage: SMS limit reached.
@@ -257,13 +257,16 @@ paths:
     get:
       operationId: GetEventType
       parameters:
-      - description: The event type
+      - description: The event type to retrieve schema for.
         explode: false
         in: path
         name: eventType
         required: true
         schema:
-          description: The event type
+          description: The event type to retrieve schema for.
+          maxLength: 512
+          minLength: 0
+          pattern: ^[a-zA-Z]*$
           type: string
         style: simple
       responses:
@@ -493,9 +496,9 @@ paths:
                 matchingPattern:
                   eventType: Manual
                   filter: Entity eq 'Portfolio'
-                createdAt: 0001-01-01T00:00:00.0000000+00:00
+                createdAt: 2020-06-15T12:00:00.0000000+00:00
                 createdBy: TestClient
-                lastModifiedAt: 0001-01-01T00:00:00.0000000+00:00
+                lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
                 lastModifiedBy: TestClient
               schema:
                 $ref: '#/components/schemas/Subscription'
@@ -720,9 +723,9 @@ paths:
                 matchingPattern:
                   eventType: Manual
                   filter: Entity eq 'Portfolio'
-                createdAt: 0001-01-01T00:00:00.0000000+00:00
+                createdAt: 2020-06-15T12:00:00.0000000+00:00
                 createdBy: TestClient
-                lastModifiedAt: 0001-01-01T00:00:00.0000000+00:00
+                lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
                 lastModifiedBy: TestClient
               schema:
                 $ref: '#/components/schemas/Subscription'
@@ -916,10 +919,10 @@ paths:
                   body: dummyBody
                 status:
                   result: Sent
-                  lastUpdated: 0001-01-01T00:00:00.0000000+00:00
-                createdAt: 0001-01-01T00:00:00.0000000+00:00
+                  lastUpdated: 2020-06-15T12:00:00.0000000+00:00
+                createdAt: 2020-06-15T12:00:00.0000000+00:00
                 createdBy: TestClient
-                lastModifiedAt: 0001-01-01T00:00:00.0000000+00:00
+                lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
                 lastModifiedBy: TestClient
               schema:
                 $ref: '#/components/schemas/Notification'
@@ -1061,10 +1064,10 @@ paths:
                   body: dummyBody
                 status:
                   result: Sent
-                  lastUpdated: 0001-01-01T00:00:00.0000000+00:00
-                createdAt: 0001-01-01T00:00:00.0000000+00:00
+                  lastUpdated: 2020-06-15T12:00:00.0000000+00:00
+                createdAt: 2020-06-15T12:00:00.0000000+00:00
                 createdBy: TestClient
-                lastModifiedAt: 0001-01-01T00:00:00.0000000+00:00
+                lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
                 lastModifiedBy: TestClient
               schema:
                 $ref: '#/components/schemas/Notification'
@@ -1175,10 +1178,10 @@ paths:
                   body: dummyBody
                 status:
                   result: Sent
-                  lastUpdated: 0001-01-01T00:00:00.0000000+00:00
-                createdAt: 0001-01-01T00:00:00.0000000+00:00
+                  lastUpdated: 2020-06-15T12:00:00.0000000+00:00
+                createdAt: 2020-06-15T12:00:00.0000000+00:00
                 createdBy: TestClient
-                lastModifiedAt: 0001-01-01T00:00:00.0000000+00:00
+                lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
                 lastModifiedBy: TestClient
               schema:
                 $ref: '#/components/schemas/Notification'
@@ -1296,10 +1299,10 @@ paths:
                   body: dummyBody
                 status:
                   result: Sent
-                  lastUpdated: 0001-01-01T00:00:00.0000000+00:00
-                createdAt: 0001-01-01T00:00:00.0000000+00:00
+                  lastUpdated: 2020-06-15T12:00:00.0000000+00:00
+                createdAt: 2020-06-15T12:00:00.0000000+00:00
                 createdBy: TestClient
-                lastModifiedAt: 0001-01-01T00:00:00.0000000+00:00
+                lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
                 lastModifiedBy: TestClient
               schema:
                 $ref: '#/components/schemas/Notification'
@@ -1434,10 +1437,10 @@ paths:
                   body: dummyBody
                 status:
                   result: Sent
-                  lastUpdated: 0001-01-01T00:00:00.0000000+00:00
-                createdAt: 0001-01-01T00:00:00.0000000+00:00
+                  lastUpdated: 2020-06-15T12:00:00.0000000+00:00
+                createdAt: 2020-06-15T12:00:00.0000000+00:00
                 createdBy: TestClient
-                lastModifiedAt: 0001-01-01T00:00:00.0000000+00:00
+                lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
                 lastModifiedBy: TestClient
               schema:
                 $ref: '#/components/schemas/Notification'
@@ -1579,10 +1582,10 @@ paths:
                   body: dummyBody
                 status:
                   result: Sent
-                  lastUpdated: 0001-01-01T00:00:00.0000000+00:00
-                createdAt: 0001-01-01T00:00:00.0000000+00:00
+                  lastUpdated: 2020-06-15T12:00:00.0000000+00:00
+                createdAt: 2020-06-15T12:00:00.0000000+00:00
                 createdBy: TestClient
-                lastModifiedAt: 0001-01-01T00:00:00.0000000+00:00
+                lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
                 lastModifiedBy: TestClient
               schema:
                 $ref: '#/components/schemas/Notification'
@@ -1739,10 +1742,10 @@ paths:
                   body: dummyBody
                 status:
                   result: Sent
-                  lastUpdated: 0001-01-01T00:00:00.0000000+00:00
-                createdAt: 0001-01-01T00:00:00.0000000+00:00
+                  lastUpdated: 2020-06-15T12:00:00.0000000+00:00
+                createdAt: 2020-06-15T12:00:00.0000000+00:00
                 createdBy: TestClient
-                lastModifiedAt: 0001-01-01T00:00:00.0000000+00:00
+                lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
                 lastModifiedBy: TestClient
               schema:
                 $ref: '#/components/schemas/Notification'
@@ -2329,6 +2332,7 @@ components:
       additionalProperties: false
       description: An EventType object
       example:
+        application: application
         jsonSchema: '{}'
         description: description
         eventName: eventName
@@ -2349,6 +2353,10 @@ components:
           type: string
         eventName:
           description: Identifier name of the event
+          nullable: true
+          type: string
+        application:
+          description: The application associated with the event
           nullable: true
           type: string
         jsonSchema:
@@ -2561,6 +2569,9 @@ components:
       properties:
         eventType:
           description: 'The type of event to subscribe to. Possible values are: Finbourne.Notifications.WebApi.Dtos.MatchingPattern.EventType'
+          maxLength: 512
+          minLength: 0
+          pattern: ^[a-zA-Z]*$
           type: string
         filter:
           description: A filter on the event. See https://support.lusid.com/filtering-results-from-lusid
@@ -3032,12 +3043,14 @@ components:
         previousPage: previousPage
         nextPage: nextPage
         values:
-        - jsonSchema: '{}'
+        - application: application
+          jsonSchema: '{}'
           description: description
           eventName: eventName
           id: id
           entity: entity
-        - jsonSchema: '{}'
+        - application: application
+          jsonSchema: '{}'
           description: description
           eventName: eventName
           id: id

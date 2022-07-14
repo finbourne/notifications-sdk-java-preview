@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **description** | **String** | The summary of the event |  [optional]
 **entity** | **String** | The entity against which the event originated |  [optional]
 **eventName** | **String** | Identifier name of the event |  [optional]
+**application** | **String** | The application associated with the event |  [optional]
 **jsonSchema** | **Object** | The schema of the event | 
 
 

@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Notifications API
-  version: 0.1.425
+  version: 0.1.474
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -90,7 +90,7 @@ paths:
                   subscriptionId:
                     scope: Scope
                     code: Code
-                  notificationId: a6c8a483-1fb1-4e80-b20d-a328dd9484ef
+                  notificationId: 80c1e37a-03b0-4a5d-9f4f-b4638926a57e
                   deliveryChannel: Email
                   messageDetails: '{"BccAddresses":["AlanShearer@email.com"], "CcAddresses":["MortenPederson@email.com"],
                     "ToAddresses":["KennyDalglish@email.com"], "Subject":"Portfolio

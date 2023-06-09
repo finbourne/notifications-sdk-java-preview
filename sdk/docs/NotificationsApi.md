@@ -4,16 +4,89 @@ All URIs are relative to *https://www.lusid.com/notifications*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**createAwsSqsNotification**](NotificationsApi.md#createAwsSqsNotification) | **POST** /api/subscriptions/{scope}/{code}/notifications/awssqs | [EXPERIMENTAL] CreateAwsSqsNotification: Add an AWS SQS notification to a subscription.
 [**createEmailNotification**](NotificationsApi.md#createEmailNotification) | **POST** /api/subscriptions/{scope}/{code}/notifications/email | [EXPERIMENTAL] CreateEmailNotification: Add an email notification to a subscription.
 [**createSmsNotification**](NotificationsApi.md#createSmsNotification) | **POST** /api/subscriptions/{scope}/{code}/notifications/sms | [EXPERIMENTAL] CreateSmsNotification: Add an SMS notification to a subscription.
 [**createWebhookNotification**](NotificationsApi.md#createWebhookNotification) | **POST** /api/subscriptions/{scope}/{code}/notifications/webhook | [EXPERIMENTAL] CreateWebhookNotification: Add a Webhook notification to a subscription.
 [**deleteNotification**](NotificationsApi.md#deleteNotification) | **DELETE** /api/subscriptions/{scope}/{code}/notifications/{id} | [EXPERIMENTAL] DeleteNotification: Delete a notification for a given subscription.
 [**getNotification**](NotificationsApi.md#getNotification) | **GET** /api/subscriptions/{scope}/{code}/notifications/{id} | [EXPERIMENTAL] GetNotification: Get a notification on a subscription.
 [**listNotifications**](NotificationsApi.md#listNotifications) | **GET** /api/subscriptions/{scope}/{code}/notifications | [EXPERIMENTAL] ListNotifications: List all notifications on a subscription.
+[**updateAwsSqsNotification**](NotificationsApi.md#updateAwsSqsNotification) | **PUT** /api/subscriptions/{scope}/{code}/notifications/awssqs/{id} | [EXPERIMENTAL] UpdateAwsSqsNotification: Update an AWS SQS notification for a given subscription.
 [**updateEmailNotification**](NotificationsApi.md#updateEmailNotification) | **PUT** /api/subscriptions/{scope}/{code}/notifications/email/{id} | [EXPERIMENTAL] UpdateEmailNotification: Update an email notification for a given subscription.
 [**updateSmsNotification**](NotificationsApi.md#updateSmsNotification) | **PUT** /api/subscriptions/{scope}/{code}/notifications/sms/{id} | [EXPERIMENTAL] UpdateSmsNotification: Update an SMS notification for a given subscription.
 [**updateWebhookNotification**](NotificationsApi.md#updateWebhookNotification) | **PUT** /api/subscriptions/{scope}/{code}/notifications/webhook/{id} | [EXPERIMENTAL] UpdateWebhookNotification: Update a Webhook notification for a given subscription.
 
+
+<a name="createAwsSqsNotification"></a>
+# **createAwsSqsNotification**
+> Notification createAwsSqsNotification(scope, code, createAwsSqsNotification)
+
+[EXPERIMENTAL] CreateAwsSqsNotification: Add an AWS SQS notification to a subscription.
+
+### Example
+```java
+// Import classes:
+import com.finbourne.notifications.ApiClient;
+import com.finbourne.notifications.ApiException;
+import com.finbourne.notifications.Configuration;
+import com.finbourne.notifications.auth.*;
+import com.finbourne.notifications.models.*;
+import com.finbourne.notifications.api.NotificationsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://www.lusid.com/notifications");
+    
+    // Configure OAuth2 access token for authorization: oauth2
+    OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
+    oauth2.setAccessToken("YOUR ACCESS TOKEN");
+
+    NotificationsApi apiInstance = new NotificationsApi(defaultClient);
+    String scope = "scope_example"; // String | The scope that identifies a notification
+    String code = "code_example"; // String | The code that identifies a notification
+    CreateAwsSqsNotification createAwsSqsNotification = new CreateAwsSqsNotification(); // CreateAwsSqsNotification | The data to create an message sent to AWS Simple Queue Service
+    try {
+      Notification result = apiInstance.createAwsSqsNotification(scope, code, createAwsSqsNotification);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling NotificationsApi#createAwsSqsNotification");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **scope** | **String**| The scope that identifies a notification |
+ **code** | **String**| The code that identifies a notification |
+ **createAwsSqsNotification** | [**CreateAwsSqsNotification**](CreateAwsSqsNotification.md)| The data to create an message sent to AWS Simple Queue Service |
+
+### Return type
+
+[**Notification**](Notification.md)
+
+### Authorization
+
+[oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json-patch+json, application/json, text/json, application/_*+json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Created |  -  |
+**400** | The details of the input related failure |  -  |
+**0** | Error response |  -  |
 
 <a name="createEmailNotification"></a>
 # **createEmailNotification**
@@ -82,7 +155,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**201** | Success |  -  |
+**201** | Created |  -  |
 **400** | The details of the input related failure |  -  |
 **0** | Error response |  -  |
 
@@ -153,7 +226,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**201** | Success |  -  |
+**201** | Created |  -  |
 **400** | The details of the input related failure |  -  |
 **0** | Error response |  -  |
 
@@ -224,7 +297,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**201** | Success |  -  |
+**201** | Created |  -  |
 **400** | The details of the input related failure |  -  |
 **0** | Error response |  -  |
 
@@ -294,7 +367,7 @@ null (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**204** | Success |  -  |
+**204** | No Content |  -  |
 **400** | The details of the input related failure |  -  |
 **404** | No notification exists in current scope |  -  |
 **0** | Error response |  -  |
@@ -439,6 +512,80 @@ Name | Type | Description  | Notes
 **200** | Success |  -  |
 **400** | The details of the input related failure |  -  |
 **404** | No notifications exists with the provided filter(s) |  -  |
+**0** | Error response |  -  |
+
+<a name="updateAwsSqsNotification"></a>
+# **updateAwsSqsNotification**
+> Notification updateAwsSqsNotification(scope, code, id, updateAwsSqsNotification)
+
+[EXPERIMENTAL] UpdateAwsSqsNotification: Update an AWS SQS notification for a given subscription.
+
+### Example
+```java
+// Import classes:
+import com.finbourne.notifications.ApiClient;
+import com.finbourne.notifications.ApiException;
+import com.finbourne.notifications.Configuration;
+import com.finbourne.notifications.auth.*;
+import com.finbourne.notifications.models.*;
+import com.finbourne.notifications.api.NotificationsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://www.lusid.com/notifications");
+    
+    // Configure OAuth2 access token for authorization: oauth2
+    OAuth oauth2 = (OAuth) defaultClient.getAuthentication("oauth2");
+    oauth2.setAccessToken("YOUR ACCESS TOKEN");
+
+    NotificationsApi apiInstance = new NotificationsApi(defaultClient);
+    String scope = "scope_example"; // String | The scope that identifies a notification
+    String code = "code_example"; // String | The code that identifies a notification
+    String id = "id_example"; // String | The unique identifier of the notification
+    UpdateAwsSqsNotification updateAwsSqsNotification = new UpdateAwsSqsNotification(); // UpdateAwsSqsNotification | The data to update a notification
+    try {
+      Notification result = apiInstance.updateAwsSqsNotification(scope, code, id, updateAwsSqsNotification);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling NotificationsApi#updateAwsSqsNotification");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **scope** | **String**| The scope that identifies a notification |
+ **code** | **String**| The code that identifies a notification |
+ **id** | **String**| The unique identifier of the notification |
+ **updateAwsSqsNotification** | [**UpdateAwsSqsNotification**](UpdateAwsSqsNotification.md)| The data to update a notification |
+
+### Return type
+
+[**Notification**](Notification.md)
+
+### Authorization
+
+[oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json-patch+json, application/json, text/json, application/_*+json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Success |  -  |
+**400** | The details of the input related failure |  -  |
+**404** | No notification exists in current scope |  -  |
 **0** | Error response |  -  |
 
 <a name="updateEmailNotification"></a>

@@ -6,7 +6,7 @@ info:
     url: https://www.finbourne.com
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Notifications API
-  version: 0.1.486
+  version: 0.1.731
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -41,12 +41,8 @@ paths:
         name: page
         required: false
         schema:
-          description: The pagination token to use to continue listing delivery attempts.
-            This value is returned from the previous call. When this field is supplied
-            the filter field should not be supplied.
           maxLength: 500
           minLength: 1
-          nullable: true
           pattern: ^[a-zA-Z0-9\+/]*={0,3}$
           type: string
         style: form
@@ -57,10 +53,7 @@ paths:
         name: limit
         required: false
         schema:
-          description: The maximum number of delivery attempts to retrieve. Defaults
-            to 5000 if not specified.
           format: int32
-          nullable: true
           type: integer
         style: form
         x-nullable: true
@@ -71,11 +64,8 @@ paths:
         name: filter
         required: false
         schema:
-          description: Expression to filter the result set. For more information about
-            filtering results, see https://support.lusid.com/knowledgebase/article/KA-01914.
           maxLength: 16384
           minLength: 0
-          nullable: true
           pattern: ^[\s\S]*$
           type: string
         style: form
@@ -106,7 +96,7 @@ paths:
                   subscriptionId:
                     scope: Scope
                     code: Code
-                  notificationId: e3fe3114-43c4-4d06-ae2d-f792fab9b57c
+                  notificationId: E3FE3114-43C4-4D06-AE2D-F792FAB9B57C
                   deliveryChannel: SMS
                   messageDetails: '{"Recipient":"+447000000000","TextBody":"Your reconciliation
                     request has completed."}'
@@ -158,10 +148,7 @@ paths:
               message: TestMessage
               subject: TestSubject
               eventTime: 2021-08-27T17:39:02.9427036+01:00
-            schema:
-              additionalProperties: false
-              description: The data to create an event.
-              type: object
+            schema: {}
           application/json:
             example:
               eventType: Manual
@@ -169,10 +156,7 @@ paths:
               message: TestMessage
               subject: TestSubject
               eventTime: 2021-08-27T17:39:02.9427036+01:00
-            schema:
-              additionalProperties: false
-              description: The data to create an event.
-              type: object
+            schema: {}
           text/json:
             example:
               eventType: Manual
@@ -180,10 +164,7 @@ paths:
               message: TestMessage
               subject: TestSubject
               eventTime: 2021-08-27T17:39:02.9427036+01:00
-            schema:
-              additionalProperties: false
-              description: The data to create an event.
-              type: object
+            schema: {}
           application/*+json:
             example:
               eventType: Manual
@@ -191,10 +172,7 @@ paths:
               message: TestMessage
               subject: TestSubject
               eventTime: 2021-08-27T17:39:02.9427036+01:00
-            schema:
-              additionalProperties: false
-              description: The data to create an event.
-              type: object
+            schema: {}
         description: The data to create an event.
         required: true
       responses:
@@ -203,7 +181,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EventDetails'
-          description: Success
+          description: Created
         "400":
           content:
             application/json:
@@ -231,6 +209,47 @@ paths:
         "200":
           content:
             application/json:
+              example:
+                values:
+                - id: TestId
+                  eventName: TestDisplayName
+                  description: TestDescription
+                  entity: TestEntity
+                  application: TestApplication
+                  jsonSchema:
+                    properties:
+                      header:
+                      - name: eventType
+                        type: StringFieldValue
+                      - name: requestId
+                        type: StringFieldValue
+                      - name: userId
+                        type: StringFieldValue
+                      - name: client
+                        type: StringFieldValue
+                      - name: action
+                        type: StringFieldValue
+                      - name: entityType
+                        type: StringFieldValue
+                      - name: timestamp
+                        type: DateTimeFieldValue
+                      - name: effectiveAt
+                        type: DateTimeFieldValue
+                      - name: href
+                        type: StringFieldValue
+                      body:
+                      - name: scope
+                        type: StringFieldValue
+                href: Test:hrefUriString
+                nextPage: nextString
+                previousPage: previousString
+                links:
+                - relation: NextPage
+                  href: Test:nextUriString
+                  method: GET
+                - relation: PreviousPage
+                  href: Test:previousUriString
+                  method: GET
               schema:
                 $ref: '#/components/schemas/ResourceListOfEventTypeSchema'
           description: Success
@@ -263,7 +282,6 @@ paths:
         name: eventType
         required: true
         schema:
-          description: The event type to retrieve schema for.
           maxLength: 512
           minLength: 0
           pattern: ^[a-zA-Z]*$
@@ -273,6 +291,36 @@ paths:
         "200":
           content:
             application/json:
+              example:
+                id: TestId
+                eventName: TestDisplayName
+                description: TestDescription
+                entity: TestEntity
+                application: TestApplication
+                jsonSchema:
+                  properties:
+                    header:
+                    - name: eventType
+                      type: StringFieldValue
+                    - name: requestId
+                      type: StringFieldValue
+                    - name: userId
+                      type: StringFieldValue
+                    - name: client
+                      type: StringFieldValue
+                    - name: action
+                      type: StringFieldValue
+                    - name: entityType
+                      type: StringFieldValue
+                    - name: timestamp
+                      type: DateTimeFieldValue
+                    - name: effectiveAt
+                      type: DateTimeFieldValue
+                    - name: href
+                      type: StringFieldValue
+                    body:
+                    - name: scope
+                      type: StringFieldValue
               schema:
                 $ref: '#/components/schemas/EventTypeSchema'
           description: Success
@@ -344,11 +392,8 @@ paths:
         name: filter
         required: false
         schema:
-          description: Expression to filter the result set. Read more about <see href="https://support.lusid.com/filtering-results-from-lusid">
-            filtering results from LUSID</see>.
           maxLength: 16384
           minLength: 0
-          nullable: true
           pattern: ^[\s\S]*$
           type: string
         style: form
@@ -359,11 +404,8 @@ paths:
         name: sortBy
         required: false
         schema:
-          description: Fields to order the result set. Read more about <see href="https://support.lusid.com/filtering-results-from-lusid"
-            /> filtering results from LUSID.
           maxLength: 16384
           minLength: 1
-          nullable: true
           pattern: ^[\s\S]*$
           type: string
         style: form
@@ -375,12 +417,8 @@ paths:
         name: page
         required: false
         schema:
-          description: Encoded page string returned from a previous search result
-            that will retrieve the next page of data. When this field is supplied
-            the filter  field should not be supplied.
           maxLength: 500
           minLength: 1
-          nullable: true
           pattern: ^[a-zA-Z0-9\+/]*={0,3}$
           type: string
         style: form
@@ -390,11 +428,9 @@ paths:
         name: limit
         required: false
         schema:
-          description: The maximum number of subscriptions to retrieve.
           format: int32
           maximum: 5000
           minimum: 1
-          nullable: true
           type: integer
         style: form
         x-nullable: true
@@ -402,6 +438,55 @@ paths:
         "200":
           content:
             application/json:
+              example:
+                values:
+                - notifications:
+                  - id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: Email
+                    recipients:
+                      EmailAddressTo:
+                      - recipient@finbourne.com
+                      EmailAddressCc:
+                      - recipientcc@finbourne.com
+                      EmailAddressBcc:
+                      - recipientbcc@finbourne.com
+                    content:
+                      Subject: Event with id of {{id}}
+                      PlainTextBody: Event with message {{message}} and subject {{subject}}
+                      HtmlBody: <p>Event with message {{message}} and subject {{subject}}</p>
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
+                  id:
+                    scope: TestScope
+                    code: TestCode
+                  displayName: TestDisplayName
+                  description: TestDescription
+                  status: Active
+                  matchingPattern:
+                    eventType: Manual
+                    filter: Entity eq 'Portfolio'
+                  createdAt: 2020-06-15T12:00:00.0000000+00:00
+                  createdBy: TestClient
+                  lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                  lastModifiedBy: TestClient
+                  useAsAuth: TestClient
+                href: Test:hrefUriString
+                nextPage: nextString
+                previousPage: previousString
+                links:
+                - relation: NextPage
+                  href: Test:nextUriString
+                  method: GET
+                - relation: PreviousPage
+                  href: Test:previousUriString
+                  method: GET
               schema:
                 $ref: '#/components/schemas/ResourceListOfSubscription'
           description: Success
@@ -495,14 +580,15 @@ paths:
                 status: Active
                 matchingPattern:
                   eventType: Manual
-                  filter: Entity eq 'Portfolio'
+                  filter: Message eq 'TestMessage'
                 createdAt: 2020-06-15T12:00:00.0000000+00:00
                 createdBy: TestClient
                 lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
                 lastModifiedBy: TestClient
+                useAsAuth: TestClient
               schema:
                 $ref: '#/components/schemas/Subscription'
-          description: Success
+          description: Created
         "400":
           content:
             application/json:
@@ -533,8 +619,7 @@ paths:
         name: scope
         required: true
         schema:
-          description: The scope that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -545,15 +630,14 @@ paths:
         name: code
         required: true
         schema:
-          description: The code that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
         style: simple
       responses:
         "204":
-          description: Success
+          description: No Content
         "400":
           content:
             application/json:
@@ -588,8 +672,7 @@ paths:
         name: scope
         required: true
         schema:
-          description: The scope that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -600,8 +683,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -610,8 +692,23 @@ paths:
         "200":
           content:
             application/json:
+              example:
+                id:
+                  scope: TestScope
+                  code: TestCode
+                displayName: TestDisplayName
+                description: TestDescription
+                status: Active
+                matchingPattern:
+                  eventType: Manual
+                  filter: Message eq 'TestMessage'
+                createdAt: 2020-06-15T12:00:00.0000000+00:00
+                createdBy: TestClient
+                lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                lastModifiedBy: TestClient
+                useAsAuth: TestClient
               schema:
-                $ref: '#/components/schemas/SubscriptionDetail'
+                $ref: '#/components/schemas/Subscription'
           description: Success
         "400":
           content:
@@ -647,8 +744,7 @@ paths:
         name: scope
         required: true
         schema:
-          description: The scope that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -659,8 +755,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -722,11 +817,12 @@ paths:
                 status: Active
                 matchingPattern:
                   eventType: Manual
-                  filter: Entity eq 'Portfolio'
+                  filter: Message eq 'TestMessage'
                 createdAt: 2020-06-15T12:00:00.0000000+00:00
                 createdBy: TestClient
                 lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
                 lastModifiedBy: TestClient
+                useAsAuth: TestClient
               schema:
                 $ref: '#/components/schemas/Subscription'
           description: Success
@@ -766,8 +862,7 @@ paths:
         name: scope
         required: true
         schema:
-          description: The scope that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -778,8 +873,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -816,6 +910,247 @@ paths:
       - Notifications
       x-fbn-apistatus: Experimental
       x-accepts: application/json
+  /api/subscriptions/{scope}/{code}/notifications/awssqs:
+    post:
+      operationId: CreateAwsSqsNotification
+      parameters:
+      - description: The scope that identifies a notification
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\-_]+$
+          type: string
+        style: simple
+      - description: The code that identifies a notification
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\-_]+$
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              apiKeyRef: config://shared/official/system-a-config/apiKey
+              apiSecretRef: config://shared/official/system-a-config/apiSecret
+              body: Event with message {{message}}
+              description: Example description
+              queueUrlRef: config://shared/official/system-a-config/queueUrl
+            schema:
+              $ref: '#/components/schemas/CreateAwsSqsNotification'
+          application/json:
+            example:
+              apiKeyRef: config://shared/official/system-a-config/apiKey
+              apiSecretRef: config://shared/official/system-a-config/apiSecret
+              body: Event with message {{message}}
+              description: Example description
+              queueUrlRef: config://shared/official/system-a-config/queueUrl
+            schema:
+              $ref: '#/components/schemas/CreateAwsSqsNotification'
+          text/json:
+            example:
+              apiKeyRef: config://shared/official/system-a-config/apiKey
+              apiSecretRef: config://shared/official/system-a-config/apiSecret
+              body: Event with message {{message}}
+              description: Example description
+              queueUrlRef: config://shared/official/system-a-config/queueUrl
+            schema:
+              $ref: '#/components/schemas/CreateAwsSqsNotification'
+          application/*+json:
+            example:
+              apiKeyRef: config://shared/official/system-a-config/apiKey
+              apiSecretRef: config://shared/official/system-a-config/apiSecret
+              body: Event with message {{message}}
+              description: Example description
+              queueUrlRef: config://shared/official/system-a-config/queueUrl
+            schema:
+              $ref: '#/components/schemas/CreateAwsSqsNotification'
+        description: The data to create an message sent to AWS Simple Queue Service
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                id: Example id
+                displayName: Example name
+                description: Example description
+                deliveryChannel: AwsSqs
+                recipients:
+                  ApiKeyRef: config://shared/official/system-a-config/apiKey
+                  ApiSecretRef: config://shared/official/system-a-config/apiSecretRef
+                  QueueUrlRef: config://shared/official/system-a-config/queueUrl
+                content:
+                  Body: Event with message {{message}}
+                status:
+                  result: Unprocessed
+                  lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                createdAt: 2020-06-15T12:00:00.0000000+00:00
+                createdBy: Example user
+                lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                lastModifiedBy: Example user
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: Created
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: '[EXPERIMENTAL] CreateAwsSqsNotification: Add an AWS SQS notification
+        to a subscription.'
+      tags:
+      - Notifications
+      x-fbn-apistatus: Experimental
+      x-contentType: application/json-patch+json
+      x-accepts: application/json
+  /api/subscriptions/{scope}/{code}/notifications/awssqs/{id}:
+    put:
+      operationId: UpdateAwsSqsNotification
+      parameters:
+      - description: The scope that identifies a notification
+        explode: false
+        in: path
+        name: scope
+        required: true
+        schema:
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\-_]+$
+          type: string
+        style: simple
+      - description: The code that identifies a notification
+        explode: false
+        in: path
+        name: code
+        required: true
+        schema:
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9\-_]+$
+          type: string
+        style: simple
+      - description: The unique identifier of the notification
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          maxLength: 40
+          minLength: 30
+          pattern: ^[a-zA-Z0-9\-]+$
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              apiKeyRef: config://shared/official/system-a-config/apiKey
+              apiSecretRef: config://shared/official/system-a-config/apiSecret
+              body: Event with message {{message}}
+              description: Example description
+              queueUrlRef: config://shared/official/system-a-config/queueUrl
+            schema:
+              $ref: '#/components/schemas/UpdateAwsSqsNotification'
+          application/json:
+            example:
+              apiKeyRef: config://shared/official/system-a-config/apiKey
+              apiSecretRef: config://shared/official/system-a-config/apiSecret
+              body: Event with message {{message}}
+              description: Example description
+              queueUrlRef: config://shared/official/system-a-config/queueUrl
+            schema:
+              $ref: '#/components/schemas/UpdateAwsSqsNotification'
+          text/json:
+            example:
+              apiKeyRef: config://shared/official/system-a-config/apiKey
+              apiSecretRef: config://shared/official/system-a-config/apiSecret
+              body: Event with message {{message}}
+              description: Example description
+              queueUrlRef: config://shared/official/system-a-config/queueUrl
+            schema:
+              $ref: '#/components/schemas/UpdateAwsSqsNotification'
+          application/*+json:
+            example:
+              apiKeyRef: config://shared/official/system-a-config/apiKey
+              apiSecretRef: config://shared/official/system-a-config/apiSecret
+              body: Event with message {{message}}
+              description: Example description
+              queueUrlRef: config://shared/official/system-a-config/queueUrl
+            schema:
+              $ref: '#/components/schemas/UpdateAwsSqsNotification'
+        description: The data to update a notification
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: Example id
+                displayName: Example name
+                description: Example description
+                deliveryChannel: AwsSqs
+                recipients:
+                  ApiKeyRef: config://shared/official/system-a-config/apiKey
+                  ApiSecretRef: config://shared/official/system-a-config/apiSecretRef
+                  QueueUrlRef: config://shared/official/system-a-config/queueUrl
+                content:
+                  Body: Event with message {{message}}
+                status:
+                  result: Unprocessed
+                  lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                createdAt: 2020-06-15T12:00:00.0000000+00:00
+                createdBy: Example user
+                lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                lastModifiedBy: Example user
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: Success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        "404":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: No notification exists in current scope
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: '[EXPERIMENTAL] UpdateAwsSqsNotification: Update an AWS SQS notification
+        for a given subscription.'
+      tags:
+      - Notifications
+      x-fbn-apistatus: Experimental
+      x-contentType: application/json-patch+json
+      x-accepts: application/json
   /api/subscriptions/{scope}/{code}/notifications/email:
     post:
       operationId: CreateEmailNotification
@@ -826,8 +1161,7 @@ paths:
         name: scope
         required: true
         schema:
-          description: The scope that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -838,8 +1172,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -908,25 +1241,115 @@ paths:
         "201":
           content:
             application/json:
-              example:
-                id: TestId
-                description: TestDescription
-                deliveryChannel: Email
-                recipients:
-                  to: dummyEmail
-                content:
-                  subject: dummySubject
-                  body: dummyBody
-                status:
-                  result: Sent
-                  lastUpdated: 2020-06-15T12:00:00.0000000+00:00
-                createdAt: 2020-06-15T12:00:00.0000000+00:00
-                createdBy: TestClient
-                lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
-                lastModifiedBy: TestClient
+              examples:
+                Email Notification:
+                  value:
+                    id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: Email
+                    recipients:
+                      EmailAddressTo:
+                      - recipient@finbourne.com
+                      EmailAddressCc:
+                      - recipientcc@finbourne.com
+                      EmailAddressBcc:
+                      - recipientbcc@finbourne.com
+                    content:
+                      Subject: Event with id of {{id}}
+                      PlainTextBody: Event with message {{message}} and subject {{subject}}
+                      HtmlBody: <p>Event with message {{message}} and subject {{subject}}</p>
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
+                SMS Notification:
+                  value:
+                    id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: SMS
+                    recipients:
+                      Recipients:
+                      - +447000000000
+                    content:
+                      Body: Event with message {{message}} and subject {{subject}}
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
+                Api Request Notification:
+                  value:
+                    id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: ApiRequest
+                    recipients:
+                      Method: Post
+                      PathAndQuery: notification/api/{{id}}/path?examplequery={{id}}
+                    content:
+                      Content:
+                        Key: Value Example
+                        MessageKey: '{{message}}'
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
+                Webhook Notification:
+                  value:
+                    id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: Webhook
+                    recipients:
+                      Method: Post
+                      Url: https://example.com/api/{{id}}/path?examplequery={{id}}
+                      AuthenticationType: BearerToken
+                      AuthenticationConfigurationItemPaths:
+                        BearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
+                    content:
+                      ContentType: Json
+                      Content:
+                        Key: Value Example
+                        MessageKey: '{{message}}'
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
+                AWS SQS Notification:
+                  value:
+                    id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: AwsSqs
+                    recipients:
+                      ApiKeyRef: config://shared/official/system-a-config/apiKey
+                      ApiSecretRef: config://shared/official/system-a-config/apiSecretRef
+                      QueueUrlRef: config://shared/official/system-a-config/queueUrl
+                    content:
+                      Body: Event with message {{message}}
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
               schema:
                 $ref: '#/components/schemas/Notification'
-          description: Success
+          description: Created
         "400":
           content:
             application/json:
@@ -958,8 +1381,7 @@ paths:
         name: scope
         required: true
         schema:
-          description: The scope that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -970,8 +1392,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -982,10 +1403,8 @@ paths:
         name: id
         required: true
         schema:
-          description: The unique identifier of the notification
           maxLength: 40
           minLength: 30
-          nullable: true
           pattern: ^[a-zA-Z0-9\-]+$
           type: string
         style: simple
@@ -1054,21 +1473,23 @@ paths:
           content:
             application/json:
               example:
-                id: TestId
-                description: TestDescription
-                deliveryChannel: Email
+                id: Example id
+                displayName: Example name
+                description: Example description
+                deliveryChannel: AwsSqs
                 recipients:
-                  to: dummyEmail
+                  ApiKeyRef: config://shared/official/system-a-config/apiKey
+                  ApiSecretRef: config://shared/official/system-a-config/apiSecretRef
+                  QueueUrlRef: config://shared/official/system-a-config/queueUrl
                 content:
-                  subject: dummySubject
-                  body: dummyBody
+                  Body: Event with message {{message}}
                 status:
-                  result: Sent
-                  lastUpdated: 2020-06-15T12:00:00.0000000+00:00
+                  result: Unprocessed
+                  lastUpdated: 0001-01-01T00:00:00.0000000+00:00
                 createdAt: 2020-06-15T12:00:00.0000000+00:00
-                createdBy: TestClient
+                createdBy: Example user
                 lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
-                lastModifiedBy: TestClient
+                lastModifiedBy: Example user
               schema:
                 $ref: '#/components/schemas/Notification'
           description: Success
@@ -1109,8 +1530,7 @@ paths:
         name: scope
         required: true
         schema:
-          description: The scope that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -1121,8 +1541,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -1167,25 +1586,115 @@ paths:
         "201":
           content:
             application/json:
-              example:
-                id: TestId
-                description: TestDescription
-                deliveryChannel: Email
-                recipients:
-                  to: dummyEmail
-                content:
-                  subject: dummySubject
-                  body: dummyBody
-                status:
-                  result: Sent
-                  lastUpdated: 2020-06-15T12:00:00.0000000+00:00
-                createdAt: 2020-06-15T12:00:00.0000000+00:00
-                createdBy: TestClient
-                lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
-                lastModifiedBy: TestClient
+              examples:
+                Email Notification:
+                  value:
+                    id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: Email
+                    recipients:
+                      EmailAddressTo:
+                      - recipient@finbourne.com
+                      EmailAddressCc:
+                      - recipientcc@finbourne.com
+                      EmailAddressBcc:
+                      - recipientbcc@finbourne.com
+                    content:
+                      Subject: Event with id of {{id}}
+                      PlainTextBody: Event with message {{message}} and subject {{subject}}
+                      HtmlBody: <p>Event with message {{message}} and subject {{subject}}</p>
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
+                SMS Notification:
+                  value:
+                    id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: SMS
+                    recipients:
+                      Recipients:
+                      - +447000000000
+                    content:
+                      Body: Event with message {{message}} and subject {{subject}}
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
+                Api Request Notification:
+                  value:
+                    id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: ApiRequest
+                    recipients:
+                      Method: Post
+                      PathAndQuery: notification/api/{{id}}/path?examplequery={{id}}
+                    content:
+                      Content:
+                        Key: Value Example
+                        MessageKey: '{{message}}'
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
+                Webhook Notification:
+                  value:
+                    id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: Webhook
+                    recipients:
+                      Method: Post
+                      Url: https://example.com/api/{{id}}/path?examplequery={{id}}
+                      AuthenticationType: BearerToken
+                      AuthenticationConfigurationItemPaths:
+                        BearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
+                    content:
+                      ContentType: Json
+                      Content:
+                        Key: Value Example
+                        MessageKey: '{{message}}'
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
+                AWS SQS Notification:
+                  value:
+                    id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: AwsSqs
+                    recipients:
+                      ApiKeyRef: config://shared/official/system-a-config/apiKey
+                      ApiSecretRef: config://shared/official/system-a-config/apiSecretRef
+                      QueueUrlRef: config://shared/official/system-a-config/queueUrl
+                    content:
+                      Body: Event with message {{message}}
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
               schema:
                 $ref: '#/components/schemas/Notification'
-          description: Success
+          description: Created
         "400":
           content:
             application/json:
@@ -1217,8 +1726,7 @@ paths:
         name: scope
         required: true
         schema:
-          description: The scope that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -1229,8 +1737,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -1241,10 +1748,8 @@ paths:
         name: id
         required: true
         schema:
-          description: The unique identifier of the notification
           maxLength: 40
           minLength: 30
-          nullable: true
           pattern: ^[a-zA-Z0-9\-]+$
           type: string
         style: simple
@@ -1289,21 +1794,23 @@ paths:
           content:
             application/json:
               example:
-                id: TestId
-                description: TestDescription
-                deliveryChannel: Email
+                id: Example id
+                displayName: Example name
+                description: Example description
+                deliveryChannel: AwsSqs
                 recipients:
-                  to: dummyEmail
+                  ApiKeyRef: config://shared/official/system-a-config/apiKey
+                  ApiSecretRef: config://shared/official/system-a-config/apiSecretRef
+                  QueueUrlRef: config://shared/official/system-a-config/queueUrl
                 content:
-                  subject: dummySubject
-                  body: dummyBody
+                  Body: Event with message {{message}}
                 status:
-                  result: Sent
-                  lastUpdated: 2020-06-15T12:00:00.0000000+00:00
+                  result: Unprocessed
+                  lastUpdated: 0001-01-01T00:00:00.0000000+00:00
                 createdAt: 2020-06-15T12:00:00.0000000+00:00
-                createdBy: TestClient
+                createdBy: Example user
                 lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
-                lastModifiedBy: TestClient
+                lastModifiedBy: Example user
               schema:
                 $ref: '#/components/schemas/Notification'
           description: Success
@@ -1344,8 +1851,7 @@ paths:
         name: scope
         required: true
         schema:
-          description: The scope that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -1356,8 +1862,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -1371,7 +1876,7 @@ paths:
               url: https://example.com/api/{{id}}/path?examplequery={{id}}
               authenticationType: BearerToken
               authenticationConfigurationItemPaths:
-                bearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
+                BearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
               contentType: Json
               content:
                 Key: Value Example
@@ -1385,7 +1890,7 @@ paths:
               url: https://example.com/api/{{id}}/path?examplequery={{id}}
               authenticationType: BearerToken
               authenticationConfigurationItemPaths:
-                bearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
+                BearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
               contentType: Json
               content:
                 Key: Value Example
@@ -1399,7 +1904,7 @@ paths:
               url: https://example.com/api/{{id}}/path?examplequery={{id}}
               authenticationType: BearerToken
               authenticationConfigurationItemPaths:
-                bearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
+                BearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
               contentType: Json
               content:
                 Key: Value Example
@@ -1413,7 +1918,7 @@ paths:
               url: https://example.com/api/{{id}}/path?examplequery={{id}}
               authenticationType: BearerToken
               authenticationConfigurationItemPaths:
-                bearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
+                BearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
               contentType: Json
               content:
                 Key: Value Example
@@ -1426,25 +1931,115 @@ paths:
         "201":
           content:
             application/json:
-              example:
-                id: TestId
-                description: TestDescription
-                deliveryChannel: Email
-                recipients:
-                  to: dummyEmail
-                content:
-                  subject: dummySubject
-                  body: dummyBody
-                status:
-                  result: Sent
-                  lastUpdated: 2020-06-15T12:00:00.0000000+00:00
-                createdAt: 2020-06-15T12:00:00.0000000+00:00
-                createdBy: TestClient
-                lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
-                lastModifiedBy: TestClient
+              examples:
+                Email Notification:
+                  value:
+                    id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: Email
+                    recipients:
+                      EmailAddressTo:
+                      - recipient@finbourne.com
+                      EmailAddressCc:
+                      - recipientcc@finbourne.com
+                      EmailAddressBcc:
+                      - recipientbcc@finbourne.com
+                    content:
+                      Subject: Event with id of {{id}}
+                      PlainTextBody: Event with message {{message}} and subject {{subject}}
+                      HtmlBody: <p>Event with message {{message}} and subject {{subject}}</p>
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
+                SMS Notification:
+                  value:
+                    id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: SMS
+                    recipients:
+                      Recipients:
+                      - +447000000000
+                    content:
+                      Body: Event with message {{message}} and subject {{subject}}
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
+                Api Request Notification:
+                  value:
+                    id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: ApiRequest
+                    recipients:
+                      Method: Post
+                      PathAndQuery: notification/api/{{id}}/path?examplequery={{id}}
+                    content:
+                      Content:
+                        Key: Value Example
+                        MessageKey: '{{message}}'
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
+                Webhook Notification:
+                  value:
+                    id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: Webhook
+                    recipients:
+                      Method: Post
+                      Url: https://example.com/api/{{id}}/path?examplequery={{id}}
+                      AuthenticationType: BearerToken
+                      AuthenticationConfigurationItemPaths:
+                        BearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
+                    content:
+                      ContentType: Json
+                      Content:
+                        Key: Value Example
+                        MessageKey: '{{message}}'
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
+                AWS SQS Notification:
+                  value:
+                    id: Example id
+                    displayName: Example name
+                    description: Example description
+                    deliveryChannel: AwsSqs
+                    recipients:
+                      ApiKeyRef: config://shared/official/system-a-config/apiKey
+                      ApiSecretRef: config://shared/official/system-a-config/apiSecretRef
+                      QueueUrlRef: config://shared/official/system-a-config/queueUrl
+                    content:
+                      Body: Event with message {{message}}
+                    status:
+                      result: Unprocessed
+                      lastUpdated: 0001-01-01T00:00:00.0000000+00:00
+                    createdAt: 2020-06-15T12:00:00.0000000+00:00
+                    createdBy: Example user
+                    lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
+                    lastModifiedBy: Example user
               schema:
                 $ref: '#/components/schemas/Notification'
-          description: Success
+          description: Created
         "400":
           content:
             application/json:
@@ -1476,8 +2071,7 @@ paths:
         name: scope
         required: true
         schema:
-          description: The scope that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -1488,8 +2082,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -1500,10 +2093,8 @@ paths:
         name: id
         required: true
         schema:
-          description: The unique identifier of the notification
           maxLength: 40
           minLength: 30
-          nullable: true
           pattern: ^[a-zA-Z0-9\-]+$
           type: string
         style: simple
@@ -1516,7 +2107,7 @@ paths:
               url: https://example.com/api/{{id}}/path?examplequery={{id}}
               authenticationType: BearerToken
               authenticationConfigurationItemPaths:
-                bearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
+                BearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
               contentType: Json
               content:
                 Key: Value Example
@@ -1530,7 +2121,7 @@ paths:
               url: https://example.com/api/{{id}}/path?examplequery={{id}}
               authenticationType: BearerToken
               authenticationConfigurationItemPaths:
-                bearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
+                BearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
               contentType: Json
               content:
                 Key: Value Example
@@ -1544,7 +2135,7 @@ paths:
               url: https://example.com/api/{{id}}/path?examplequery={{id}}
               authenticationType: BearerToken
               authenticationConfigurationItemPaths:
-                bearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
+                BearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
               contentType: Json
               content:
                 Key: Value Example
@@ -1558,7 +2149,7 @@ paths:
               url: https://example.com/api/{{id}}/path?examplequery={{id}}
               authenticationType: BearerToken
               authenticationConfigurationItemPaths:
-                bearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
+                BearerToken: config://personal/myUserId/WebhookConfigurations/ExampleService/BearerToken
               contentType: Json
               content:
                 Key: Value Example
@@ -1572,21 +2163,23 @@ paths:
           content:
             application/json:
               example:
-                id: TestId
-                description: TestDescription
-                deliveryChannel: Email
+                id: Example id
+                displayName: Example name
+                description: Example description
+                deliveryChannel: AwsSqs
                 recipients:
-                  to: dummyEmail
+                  ApiKeyRef: config://shared/official/system-a-config/apiKey
+                  ApiSecretRef: config://shared/official/system-a-config/apiSecretRef
+                  QueueUrlRef: config://shared/official/system-a-config/queueUrl
                 content:
-                  subject: dummySubject
-                  body: dummyBody
+                  Body: Event with message {{message}}
                 status:
-                  result: Sent
-                  lastUpdated: 2020-06-15T12:00:00.0000000+00:00
+                  result: Unprocessed
+                  lastUpdated: 0001-01-01T00:00:00.0000000+00:00
                 createdAt: 2020-06-15T12:00:00.0000000+00:00
-                createdBy: TestClient
+                createdBy: Example user
                 lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
-                lastModifiedBy: TestClient
+                lastModifiedBy: Example user
               schema:
                 $ref: '#/components/schemas/Notification'
           description: Success
@@ -1627,8 +2220,7 @@ paths:
         name: scope
         required: true
         schema:
-          description: The scope that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -1639,8 +2231,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -1651,16 +2242,11 @@ paths:
         name: id
         required: true
         schema:
-          description: The unique identifier of the notification
-          maxLength: 40
-          minLength: 30
-          nullable: true
-          pattern: ^[a-zA-Z0-9\-]+$
           type: string
         style: simple
       responses:
         "204":
-          description: Success
+          description: No Content
         "400":
           content:
             application/json:
@@ -1696,8 +2282,7 @@ paths:
         name: scope
         required: true
         schema:
-          description: The scope that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -1708,8 +2293,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code that identifies a subscription
-          maxLength: 64
+          maxLength: 100
           minLength: 1
           pattern: ^[a-zA-Z0-9\-_]+$
           type: string
@@ -1720,11 +2304,6 @@ paths:
         name: id
         required: true
         schema:
-          description: The unique identifier of the notification
-          maxLength: 40
-          minLength: 30
-          nullable: true
-          pattern: ^[a-zA-Z0-9\-]+$
           type: string
         style: simple
       responses:
@@ -1732,21 +2311,23 @@ paths:
           content:
             application/json:
               example:
-                id: TestId
-                description: TestDescription
-                deliveryChannel: Email
+                id: Example id
+                displayName: Example name
+                description: Example description
+                deliveryChannel: AwsSqs
                 recipients:
-                  to: dummyEmail
+                  ApiKeyRef: config://shared/official/system-a-config/apiKey
+                  ApiSecretRef: config://shared/official/system-a-config/apiSecretRef
+                  QueueUrlRef: config://shared/official/system-a-config/queueUrl
                 content:
-                  subject: dummySubject
-                  body: dummyBody
+                  Body: Event with message {{message}}
                 status:
-                  result: Sent
-                  lastUpdated: 2020-06-15T12:00:00.0000000+00:00
+                  result: Unprocessed
+                  lastUpdated: 0001-01-01T00:00:00.0000000+00:00
                 createdAt: 2020-06-15T12:00:00.0000000+00:00
-                createdBy: TestClient
+                createdBy: Example user
                 lastModifiedAt: 2020-06-20T12:00:00.0000000+00:00
-                lastModifiedBy: TestClient
+                lastModifiedBy: Example user
               schema:
                 $ref: '#/components/schemas/Notification'
           description: Success
@@ -1819,6 +2400,7 @@ components:
           relation: relation
       properties:
         description:
+          minLength: 1
           type: string
         action:
           $ref: '#/components/schemas/ActionId'
@@ -1963,6 +2545,7 @@ components:
           nullable: true
           type: string
         description:
+          minLength: 1
           type: string
         actions:
           items:
@@ -2040,6 +2623,7 @@ components:
       properties:
         result:
           description: Result of the delivery.
+          minLength: 1
           type: string
         detailedMessage:
           description: The detailed message from attempting to deliver the message.
@@ -2047,6 +2631,48 @@ components:
           type: string
       required:
       - result
+      type: object
+    CreateAwsSqsNotification:
+      additionalProperties: false
+      description: The information required to create a notification which, when processed,
+        will send an notification to Amazon SQS
+      example:
+        queueUrlRef: queueUrlRef
+        apiSecretRef: apiSecretRef
+        description: description
+        apiKeyRef: apiKeyRef
+        body: body
+      properties:
+        apiKeyRef:
+          description: Reference to API key from Configuration Store
+          minLength: 1
+          type: string
+        apiSecretRef:
+          description: Reference to API secret from Configuration Store
+          minLength: 1
+          type: string
+        body:
+          description: The body of the Amazon Queue Message
+          maxLength: 1024
+          minLength: 1
+          pattern: ^[\s\S]*$
+          type: string
+        description:
+          description: The summary of the services provided by the notification
+          maxLength: 512
+          minLength: 1
+          pattern: ^[\s\S]*$
+          type: string
+        queueUrlRef:
+          description: Reference to queue url from Configuration Store
+          minLength: 1
+          type: string
+      required:
+      - apiKeyRef
+      - apiSecretRef
+      - body
+      - description
+      - queueUrlRef
       type: object
     CreateEmailNotification:
       additionalProperties: false
@@ -2058,12 +2684,21 @@ components:
         emailAddressTo:
         - emailAddressTo
         - emailAddressTo
+        - emailAddressTo
+        - emailAddressTo
+        - emailAddressTo
         emailAddressBcc:
+        - emailAddressBcc
+        - emailAddressBcc
+        - emailAddressBcc
         - emailAddressBcc
         - emailAddressBcc
         description: description
         plainTextBody: plainTextBody
         emailAddressCc:
+        - emailAddressCc
+        - emailAddressCc
+        - emailAddressCc
         - emailAddressCc
         - emailAddressCc
       properties:
@@ -2096,23 +2731,23 @@ components:
           description: '''To'' recipients of the email'
           items:
             type: string
-          maxLength: 10
-          minLength: 1
+          maxItems: 10
+          minItems: 1
           type: array
         emailAddressCc:
           description: '''Cc'' recipients of the email'
           items:
             type: string
-          maxLength: 10
-          minLength: 0
+          maxItems: 10
+          minItems: 0
           nullable: true
           type: array
         emailAddressBcc:
           description: '''Bcc'' recipients of the email'
           items:
             type: string
-          maxLength: 10
-          minLength: 0
+          maxItems: 10
+          minItems: 0
           nullable: true
           type: array
       required:
@@ -2127,6 +2762,9 @@ components:
         will send an SMS
       example:
         recipients:
+        - recipients
+        - recipients
+        - recipients
         - recipients
         - recipients
         description: description
@@ -2148,8 +2786,8 @@ components:
           description: The phone numbers to which the SMS will be sent to (E.164 format)
           items:
             type: string
-          maxLength: 10
-          minLength: 1
+          maxItems: 10
+          minItems: 1
           type: array
       required:
       - body
@@ -2163,6 +2801,7 @@ components:
         matchingPattern:
           filter: filter
           eventType: eventType
+        useAsAuth: useAsAuth
         displayName: displayName
         description: description
         id:
@@ -2187,9 +2826,17 @@ components:
         status:
           description: 'The current status of the subscription. Possible values are:
             Active, Inactive'
+          minLength: 1
           type: string
         matchingPattern:
           $ref: '#/components/schemas/MatchingPattern'
+        useAsAuth:
+          description: The user to authenticate the subscription
+          maxLength: 64
+          minLength: 1
+          nullable: true
+          pattern: ^[a-zA-Z0-9\-_]+$
+          type: string
       required:
       - description
       - displayName
@@ -2209,7 +2856,7 @@ components:
         url: url
         authenticationConfigurationItemPaths:
           key: authenticationConfigurationItemPaths
-        content: '{}'
+        content: ""
       properties:
         description:
           description: The summary of the services provided by the notification
@@ -2219,6 +2866,7 @@ components:
           type: string
         httpMethod:
           description: The HTTP method such as GET, POST, etc. to use on the request
+          minLength: 1
           type: string
         url:
           description: The URL to send the request to
@@ -2228,19 +2876,21 @@ components:
           type: string
         authenticationType:
           description: The type of authentication to use on the request
+          minLength: 1
           type: string
         authenticationConfigurationItemPaths:
           additionalProperties:
+            nullable: true
             type: string
           description: "The paths of the Configuration Store configuration items that\
             \ contain the authentication configuration. Each\r\nauthentication type\
             \ requires different keys:\r\n- Lusid - None required\r\n- BasicAuth -\
-            \ Requires 'Username' and 'Password'\r\n- BearerToken - Requires 'BearerToken'\r\
-            \n            \r\ne.g. the following would be valid assuming that the\
-            \ config is present in the configuration store at the\r\nspecified paths:\r\
-            \n            \r\n    \"authenticationType\": \"BasicAuth\",\r\n    \"\
-            authenticationConfigurationItemPaths\": {\r\n        \"Username\": \"\
-            config://personal/myUserId/WebhookConfigurations/ExampleService/AdminUser\"\
+            \ Requires 'Username' and 'Password'\r\n- BearerToken - Requires 'BearerToken'\
+            \ and optionally 'BearerScheme'\r\n            \r\ne.g. the following\
+            \ would be valid assuming that the config is present in the configuration\
+            \ store at the\r\nspecified paths:\r\n            \r\n    \"authenticationType\"\
+            : \"BasicAuth\",\r\n    \"authenticationConfigurationItemPaths\": {\r\n\
+            \        \"Username\": \"config://personal/myUserId/WebhookConfigurations/ExampleService/AdminUser\"\
             ,\r\n        \"Password\": \"config://personal/myUserId/WebhookConfigurations/ExampleService/AdminPassword\"\
             \r\n    }"
           nullable: true
@@ -2250,10 +2900,8 @@ components:
           nullable: true
           type: string
         content:
-          additionalProperties: false
           description: The content of the request
           nullable: true
-          type: object
       required:
       - authenticationType
       - description
@@ -2266,7 +2914,7 @@ components:
         eventId: eventId
         messageDetails: messageDetails
         deliveryChannel: deliveryChannel
-        notificationId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        notificationId: notificationId
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         subscriptionId:
           code: code
@@ -2289,18 +2937,21 @@ components:
           type: string
         eventId:
           description: The identifier of the associated event.
+          minLength: 1
           type: string
         subscriptionId:
           $ref: '#/components/schemas/ResourceId'
         notificationId:
           description: The identifier of the associated notification.
-          format: uuid
+          minLength: 1
           type: string
         deliveryChannel:
           description: The delivery channel of the message.
+          minLength: 1
           type: string
         messageDetails:
           description: The Details of the delivery message as JSON string.
+          minLength: 1
           type: string
         attempts:
           description: A list of all the delivery attempts made for this message.
@@ -2333,15 +2984,22 @@ components:
       description: An EventType object
       example:
         application: application
-        jsonSchema: '{}'
-        description: description
+        bodySchema: ""
+        jsonSchema: ""
+        headerSchema: ""
         eventName: eventName
+        description: description
         id: id
         entity: entity
       properties:
         id:
           description: The identifier of the event type
           nullable: true
+          type: string
+        eventName:
+          description: Identifier name of the event
+          nullable: true
+          readOnly: true
           type: string
         description:
           description: The summary of the event
@@ -2351,20 +3009,21 @@ components:
           description: The entity against which the event originated
           nullable: true
           type: string
-        eventName:
-          description: Identifier name of the event
-          nullable: true
-          type: string
         application:
           description: The application associated with the event
           nullable: true
           type: string
         jsonSchema:
-          additionalProperties: false
           description: The schema of the event
-          type: object
-      required:
-      - jsonSchema
+          nullable: true
+        headerSchema:
+          description: Header
+          nullable: true
+          readOnly: true
+        bodySchema:
+          description: Body
+          nullable: true
+          readOnly: true
       type: object
     IdentifierPartSchema:
       additionalProperties: false
@@ -2388,10 +3047,13 @@ components:
           format: int32
           type: integer
         name:
+          minLength: 1
           type: string
         displayName:
+          minLength: 1
           type: string
         description:
+          minLength: 1
           type: string
         required:
           type: boolean
@@ -2430,7 +3092,7 @@ components:
         actions:
           items:
             $ref: '#/components/schemas/ActionId'
-          minLength: 1
+          minItems: 1
           type: array
         name:
           maxLength: 100
@@ -2473,6 +3135,7 @@ components:
       additionalProperties: false
       properties:
         name:
+          minLength: 1
           type: string
         errorDetails:
           items:
@@ -2500,13 +3163,6 @@ components:
         instance:
           nullable: true
           type: string
-        extensions:
-          additionalProperties:
-            additionalProperties: false
-            type: object
-          nullable: true
-          readOnly: true
-          type: object
       required:
       - code
       - name
@@ -2515,6 +3171,7 @@ components:
       additionalProperties: false
       properties:
         name:
+          minLength: 1
           type: string
         errorDetails:
           items:
@@ -2549,13 +3206,6 @@ components:
         instance:
           nullable: true
           type: string
-        extensions:
-          additionalProperties:
-            additionalProperties: false
-            type: object
-          nullable: true
-          readOnly: true
-          type: object
       required:
       - code
       - name
@@ -2568,7 +3218,9 @@ components:
         eventType: eventType
       properties:
         eventType:
-          description: 'The type of event to subscribe to. Possible values are: Finbourne.Notifications.WebApi.Dtos.MatchingPattern.EventType'
+          description: "The type of event to subscribe to. The list of available event\
+            \ types can be discovered\r\nby calling the ‘List available EventTypes’\
+            \ API endpoint."
           maxLength: 512
           minLength: 0
           pattern: ^[a-zA-Z]*$
@@ -2591,20 +3243,29 @@ components:
         createdAt: 2000-01-23T04:56:07.000+00:00
         lastModifiedAt: 2000-01-23T04:56:07.000+00:00
         createdBy: createdBy
+        displayName: displayName
         deliveryChannel: deliveryChannel
         recipients:
-          key: '{}'
+          key: ""
         lastModifiedBy: lastModifiedBy
         description: description
         id: id
         content:
-          key: '{}'
+          key: ""
         status:
           result: result
           lastUpdated: 2000-01-23T04:56:07.000+00:00
       properties:
         id:
           description: The identifier of the notification
+          minLength: 1
+          type: string
+        displayName:
+          description: The name of the notification
+          maxLength: 64
+          minLength: 0
+          nullable: true
+          pattern: ^[\s\S]*$
           type: string
         description:
           description: The summary of the services provided by the notification
@@ -2615,17 +3276,16 @@ components:
           type: string
         deliveryChannel:
           description: The medium through which the notification is delivered
+          minLength: 1
           type: string
         recipients:
           additionalProperties:
-            additionalProperties: false
-            type: object
+            nullable: true
           description: Recipient of the notification
           type: object
         content:
           additionalProperties:
-            additionalProperties: false
-            type: object
+            nullable: true
           description: The contents of the notification
           maxLength: 5
           type: object
@@ -2637,6 +3297,7 @@ components:
           type: string
         createdBy:
           description: The user who made the subscription
+          minLength: 1
           type: string
         lastModifiedAt:
           description: The time at which the subscription was last modified
@@ -2644,6 +3305,7 @@ components:
           type: string
         lastModifiedBy:
           description: The user who last modified the subscription
+          minLength: 1
           type: string
       required:
       - content
@@ -2673,15 +3335,18 @@ components:
       type: object
     ResourceId:
       additionalProperties: false
+      description: Identifiers of an entity
       example:
         code: code
         scope: scope
       properties:
         scope:
+          description: The scope used to identify an entity
           maxLength: 512
           minLength: 1
           type: string
         code:
+          description: The code used to identify an entity
           maxLength: 512
           minLength: 1
           type: string
@@ -2969,7 +3634,7 @@ components:
         - eventId: eventId
           messageDetails: messageDetails
           deliveryChannel: deliveryChannel
-          notificationId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          notificationId: notificationId
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           subscriptionId:
             code: code
@@ -2988,7 +3653,7 @@ components:
         - eventId: eventId
           messageDetails: messageDetails
           deliveryChannel: deliveryChannel
-          notificationId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          notificationId: notificationId
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           subscriptionId:
             code: code
@@ -3044,15 +3709,19 @@ components:
         nextPage: nextPage
         values:
         - application: application
-          jsonSchema: '{}'
-          description: description
+          bodySchema: ""
+          jsonSchema: ""
+          headerSchema: ""
           eventName: eventName
+          description: description
           id: id
           entity: entity
         - application: application
-          jsonSchema: '{}'
-          description: description
+          bodySchema: ""
+          jsonSchema: ""
+          headerSchema: ""
           eventName: eventName
+          description: description
           id: id
           entity: entity
         links:
@@ -3097,28 +3766,30 @@ components:
         - createdAt: 2000-01-23T04:56:07.000+00:00
           lastModifiedAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
+          displayName: displayName
           deliveryChannel: deliveryChannel
           recipients:
-            key: '{}'
+            key: ""
           lastModifiedBy: lastModifiedBy
           description: description
           id: id
           content:
-            key: '{}'
+            key: ""
           status:
             result: result
             lastUpdated: 2000-01-23T04:56:07.000+00:00
         - createdAt: 2000-01-23T04:56:07.000+00:00
           lastModifiedAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
+          displayName: displayName
           deliveryChannel: deliveryChannel
           recipients:
-            key: '{}'
+            key: ""
           lastModifiedBy: lastModifiedBy
           description: description
           id: id
           content:
-            key: '{}'
+            key: ""
           status:
             result: result
             lastUpdated: 2000-01-23T04:56:07.000+00:00
@@ -3166,6 +3837,7 @@ components:
             filter: filter
             eventType: eventType
           lastModifiedAt: 2000-01-23T04:56:07.000+00:00
+          useAsAuth: useAsAuth
           createdBy: createdBy
           displayName: displayName
           lastModifiedBy: lastModifiedBy
@@ -3173,12 +3845,44 @@ components:
           id:
             code: code
             scope: scope
+          notifications:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            lastModifiedAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            displayName: displayName
+            deliveryChannel: deliveryChannel
+            recipients:
+              key: ""
+            lastModifiedBy: lastModifiedBy
+            description: description
+            id: id
+            content:
+              key: ""
+            status:
+              result: result
+              lastUpdated: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            lastModifiedAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            displayName: displayName
+            deliveryChannel: deliveryChannel
+            recipients:
+              key: ""
+            lastModifiedBy: lastModifiedBy
+            description: description
+            id: id
+            content:
+              key: ""
+            status:
+              result: result
+              lastUpdated: 2000-01-23T04:56:07.000+00:00
           status: status
         - createdAt: 2000-01-23T04:56:07.000+00:00
           matchingPattern:
             filter: filter
             eventType: eventType
           lastModifiedAt: 2000-01-23T04:56:07.000+00:00
+          useAsAuth: useAsAuth
           createdBy: createdBy
           displayName: displayName
           lastModifiedBy: lastModifiedBy
@@ -3186,6 +3890,37 @@ components:
           id:
             code: code
             scope: scope
+          notifications:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            lastModifiedAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            displayName: displayName
+            deliveryChannel: deliveryChannel
+            recipients:
+              key: ""
+            lastModifiedBy: lastModifiedBy
+            description: description
+            id: id
+            content:
+              key: ""
+            status:
+              result: result
+              lastUpdated: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            lastModifiedAt: 2000-01-23T04:56:07.000+00:00
+            createdBy: createdBy
+            displayName: displayName
+            deliveryChannel: deliveryChannel
+            recipients:
+              key: ""
+            lastModifiedBy: lastModifiedBy
+            description: description
+            id: id
+            content:
+              key: ""
+            status:
+              result: result
+              lastUpdated: 2000-01-23T04:56:07.000+00:00
           status: status
         links:
         - method: method
@@ -3229,62 +3964,7 @@ components:
           filter: filter
           eventType: eventType
         lastModifiedAt: 2000-01-23T04:56:07.000+00:00
-        createdBy: createdBy
-        displayName: displayName
-        lastModifiedBy: lastModifiedBy
-        description: description
-        id:
-          code: code
-          scope: scope
-        status: status
-      properties:
-        id:
-          $ref: '#/components/schemas/ResourceId'
-        displayName:
-          description: The name of the subscription
-          type: string
-        description:
-          description: The summary of the services provided by the subscription
-          nullable: true
-          type: string
-        status:
-          description: The current status of the subscription
-          type: string
-        matchingPattern:
-          $ref: '#/components/schemas/MatchingPattern'
-        createdAt:
-          description: The time at which the subscription was made
-          format: date-time
-          type: string
-        createdBy:
-          description: The user who made the subscription
-          type: string
-        lastModifiedAt:
-          description: The time at which the subscription was last modified
-          format: date-time
-          type: string
-        lastModifiedBy:
-          description: The user who last modified the subscription
-          type: string
-      required:
-      - createdAt
-      - createdBy
-      - displayName
-      - id
-      - lastModifiedAt
-      - lastModifiedBy
-      - matchingPattern
-      - status
-      type: object
-    SubscriptionDetail:
-      additionalProperties: false
-      description: Subscription that contains its list of notifications
-      example:
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        matchingPattern:
-          filter: filter
-          eventType: eventType
-        lastModifiedAt: 2000-01-23T04:56:07.000+00:00
+        useAsAuth: useAsAuth
         createdBy: createdBy
         displayName: displayName
         lastModifiedBy: lastModifiedBy
@@ -3296,28 +3976,30 @@ components:
         - createdAt: 2000-01-23T04:56:07.000+00:00
           lastModifiedAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
+          displayName: displayName
           deliveryChannel: deliveryChannel
           recipients:
-            key: '{}'
+            key: ""
           lastModifiedBy: lastModifiedBy
           description: description
           id: id
           content:
-            key: '{}'
+            key: ""
           status:
             result: result
             lastUpdated: 2000-01-23T04:56:07.000+00:00
         - createdAt: 2000-01-23T04:56:07.000+00:00
           lastModifiedAt: 2000-01-23T04:56:07.000+00:00
           createdBy: createdBy
+          displayName: displayName
           deliveryChannel: deliveryChannel
           recipients:
-            key: '{}'
+            key: ""
           lastModifiedBy: lastModifiedBy
           description: description
           id: id
           content:
-            key: '{}'
+            key: ""
           status:
             result: result
             lastUpdated: 2000-01-23T04:56:07.000+00:00
@@ -3328,11 +4010,13 @@ components:
           items:
             $ref: '#/components/schemas/Notification'
           nullable: true
+          readOnly: true
           type: array
         id:
           $ref: '#/components/schemas/ResourceId'
         displayName:
           description: The name of the subscription
+          minLength: 1
           type: string
         description:
           description: The summary of the services provided by the subscription
@@ -3340,6 +4024,7 @@ components:
           type: string
         status:
           description: The current status of the subscription
+          minLength: 1
           type: string
         matchingPattern:
           $ref: '#/components/schemas/MatchingPattern'
@@ -3349,13 +4034,22 @@ components:
           type: string
         createdBy:
           description: The user who made the subscription
+          minLength: 1
+          readOnly: true
           type: string
         lastModifiedAt:
           description: The time at which the subscription was last modified
           format: date-time
+          readOnly: true
           type: string
         lastModifiedBy:
           description: The user who last modified the subscription
+          minLength: 1
+          readOnly: true
+          type: string
+        useAsAuth:
+          description: The user to use as auth for the subscription
+          minLength: 1
           type: string
       required:
       - createdAt
@@ -3366,6 +4060,49 @@ components:
       - lastModifiedBy
       - matchingPattern
       - status
+      - useAsAuth
+      type: object
+    UpdateAwsSqsNotification:
+      additionalProperties: false
+      description: The information required to create a notification which, when processed,
+        will send an notification to Amazon SQS
+      example:
+        queueUrlRef: queueUrlRef
+        apiSecretRef: apiSecretRef
+        description: description
+        apiKeyRef: apiKeyRef
+        body: body
+      properties:
+        apiKeyRef:
+          description: Reference to API key from Configuration Store
+          minLength: 1
+          type: string
+        apiSecretRef:
+          description: Reference to API secret from Configuration Store
+          minLength: 1
+          type: string
+        body:
+          description: The body of the Amazon Queue Message
+          maxLength: 1024
+          minLength: 1
+          pattern: ^[\s\S]*$
+          type: string
+        description:
+          description: The summary of the services provided by the notification
+          maxLength: 512
+          minLength: 1
+          pattern: ^[\s\S]*$
+          type: string
+        queueUrlRef:
+          description: Reference to queue url from Configuration Store
+          minLength: 1
+          type: string
+      required:
+      - apiKeyRef
+      - apiSecretRef
+      - body
+      - description
+      - queueUrlRef
       type: object
     UpdateEmailNotification:
       additionalProperties: false
@@ -3376,12 +4113,21 @@ components:
         emailAddressTo:
         - emailAddressTo
         - emailAddressTo
+        - emailAddressTo
+        - emailAddressTo
+        - emailAddressTo
         emailAddressBcc:
+        - emailAddressBcc
+        - emailAddressBcc
+        - emailAddressBcc
         - emailAddressBcc
         - emailAddressBcc
         description: description
         plainTextBody: plainTextBody
         emailAddressCc:
+        - emailAddressCc
+        - emailAddressCc
+        - emailAddressCc
         - emailAddressCc
         - emailAddressCc
       properties:
@@ -3414,23 +4160,23 @@ components:
           description: '''To'' recipients of the email'
           items:
             type: string
-          maxLength: 10
-          minLength: 1
+          maxItems: 10
+          minItems: 1
           type: array
         emailAddressCc:
           description: '''Cc'' recipients of the email'
           items:
             type: string
-          maxLength: 10
-          minLength: 0
+          maxItems: 10
+          minItems: 0
           nullable: true
           type: array
         emailAddressBcc:
           description: '''Bcc'' recipients of the email'
           items:
             type: string
-          maxLength: 10
-          minLength: 0
+          maxItems: 10
+          minItems: 0
           nullable: true
           type: array
       required:
@@ -3444,6 +4190,9 @@ components:
       description: The information required to update an SMS notification
       example:
         recipients:
+        - recipients
+        - recipients
+        - recipients
         - recipients
         - recipients
         description: description
@@ -3465,8 +4214,8 @@ components:
           description: The phone numbers to which the SMS will be sent to (E.164 format)
           items:
             type: string
-          maxLength: 10
-          minLength: 1
+          maxItems: 10
+          minItems: 1
           type: array
       required:
       - body
@@ -3480,6 +4229,7 @@ components:
         matchingPattern:
           filter: filter
           eventType: eventType
+        useAsAuth: useAsAuth
         displayName: displayName
         description: description
         status: status
@@ -3499,9 +4249,17 @@ components:
         status:
           description: 'The current status of the subscription. Possible values are:
             Active, Inactive'
+          minLength: 1
           type: string
         matchingPattern:
           $ref: '#/components/schemas/MatchingPattern'
+        useAsAuth:
+          description: The user to authenticate with for subscriptions
+          maxLength: 64
+          minLength: 1
+          nullable: true
+          pattern: ^[a-zA-Z0-9\-_]+$
+          type: string
       required:
       - description
       - displayName
@@ -3519,7 +4277,7 @@ components:
         url: url
         authenticationConfigurationItemPaths:
           key: authenticationConfigurationItemPaths
-        content: '{}'
+        content: ""
       properties:
         description:
           description: The summary of the services provided by the notification
@@ -3529,6 +4287,7 @@ components:
           type: string
         httpMethod:
           description: The HTTP method such as GET, POST, etc. to use on the request
+          minLength: 1
           type: string
         url:
           description: The URL to send the request to
@@ -3538,19 +4297,21 @@ components:
           type: string
         authenticationType:
           description: The type of authentication to use on the request
+          minLength: 1
           type: string
         authenticationConfigurationItemPaths:
           additionalProperties:
+            nullable: true
             type: string
           description: "The paths of the Configuration Store configuration items that\
             \ contain the authentication configuration. Each\r\nauthentication type\
             \ requires different keys:\r\n- Lusid - None required\r\n- BasicAuth -\
-            \ Requires 'Username' and 'Password'\r\n- BearerToken - Requires 'BearerToken'\r\
-            \n            \r\ne.g. the following would be valid assuming that the\
-            \ config is present in the configuration store at the\r\nspecified paths:\r\
-            \n            \r\n    \"authenticationType\": \"BasicAuth\",\r\n    \"\
-            authenticationConfigurationItemPaths\": {\r\n        \"Username\": \"\
-            config://personal/myUserId/WebhookConfigurations/ExampleService/AdminUser\"\
+            \ Requires 'Username' and 'Password'\r\n- BearerToken - Requires 'BearerToken'\
+            \ and optionally 'BearerScheme'\r\n            \r\ne.g. the following\
+            \ would be valid assuming that the config is present in the configuration\
+            \ store at the\r\nspecified paths:\r\n            \r\n    \"authenticationType\"\
+            : \"BasicAuth\",\r\n    \"authenticationConfigurationItemPaths\": {\r\n\
+            \        \"Username\": \"config://personal/myUserId/WebhookConfigurations/ExampleService/AdminUser\"\
             ,\r\n        \"Password\": \"config://personal/myUserId/WebhookConfigurations/ExampleService/AdminPassword\"\
             \r\n    }"
           nullable: true
@@ -3560,10 +4321,8 @@ components:
           nullable: true
           type: string
         content:
-          additionalProperties: false
           description: The content of the request
           nullable: true
-          type: object
       required:
       - authenticationType
       - description

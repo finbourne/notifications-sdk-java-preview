@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **description** | **String** | The summary of the services provided by the subscription | 
 **status** | **String** | The current status of the subscription. Possible values are: Active, Inactive | 
 **matchingPattern** | [**MatchingPattern**](MatchingPattern.md) |  | 
+**useAsAuth** | **String** | The user to authenticate with for subscriptions |  [optional]
 
 
 

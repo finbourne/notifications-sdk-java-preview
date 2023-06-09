@@ -9,6 +9,7 @@ A notification object
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** | The identifier of the notification | 
+**displayName** | **String** | The name of the notification |  [optional]
 **description** | **String** | The summary of the services provided by the notification |  [optional]
 **deliveryChannel** | **String** | The medium through which the notification is delivered | 
 **recipients** | **Map&lt;String, Object&gt;** | Recipient of the notification | 

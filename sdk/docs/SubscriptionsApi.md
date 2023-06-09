@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**201** | Success |  -  |
+**201** | Created |  -  |
 **400** | The details of the input related failure |  -  |
 **0** | Error response |  -  |
 
@@ -142,14 +142,14 @@ null (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**204** | Success |  -  |
+**204** | No Content |  -  |
 **400** | The details of the input related failure |  -  |
 **404** | No subscription exists in current scope |  -  |
 **0** | Error response |  -  |
 
 <a name="getSubscription"></a>
 # **getSubscription**
-> SubscriptionDetail getSubscription(scope, code)
+> Subscription getSubscription(scope, code)
 
 [EXPERIMENTAL] GetSubscription: Get a subscription.
 
@@ -176,7 +176,7 @@ public class Example {
     String scope = "scope_example"; // String | The scope that identifies a subscription
     String code = "code_example"; // String | The code that identifies a subscription
     try {
-      SubscriptionDetail result = apiInstance.getSubscription(scope, code);
+      Subscription result = apiInstance.getSubscription(scope, code);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling SubscriptionsApi#getSubscription");
@@ -198,7 +198,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**SubscriptionDetail**](SubscriptionDetail.md)
+[**Subscription**](Subscription.md)
 
 ### Authorization
 

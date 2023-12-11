@@ -1,3 +1,9 @@
+# Deprecated
+
+Please note that this repository is deprecated and will be archived early 2024.
+
+All functionality is now contained, in the [notifications-sdk-java](https://github.com/finbourne/notifications-sdk-java) repository on the `main` branch.
+
 ![LUSID_by_Finbourne](https://content.finbourne.com/LUSID_repo.png)
 
 
